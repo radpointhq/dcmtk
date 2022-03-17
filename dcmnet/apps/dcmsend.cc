@@ -118,6 +118,8 @@ int main(int argc, char *argv[])
     OFCmdUnsignedInt opt_timeout = 0;
     OFCmdUnsignedInt opt_dimseTimeout = 0;
     OFCmdUnsignedInt opt_acseTimeout = 30;
+    OFCmdUnsignedInt opt_moveOriginatorMessageId = 0;
+    const char *opt_moveOriginatorAET = ""; 
     OFCmdUnsignedInt opt_maxReceivePDULength = ASC_DEFAULTMAXPDU;
     OFCmdUnsignedInt opt_maxSendPDULength = 0;
     T_DIMSE_BlockingMode opt_blockMode = DIMSE_BLOCKING;
@@ -196,6 +198,13 @@ int main(int argc, char *argv[])
       cmd.addSubGroup("association handling:");
         cmd.addOption("--multi-associations",  "+ma",     "use multiple associations (one after the other)\nif needed to transfer the instances (default)");
         cmd.addOption("--single-association",  "-ma",     "always use a single association");
+      
+      cmd.addSubGroup("c-move originator options (Radpoint):");
+        cmd.addOption("--cmove-orig-msg-id",   "-oi", 1, "C-MOVE originator message id (default: 0)",
+                                                          "MessageID (0000,0110) of the C-MOVE-RQ Message from which this C-STORE sub-operation is being performed");
+        cmd.addOption("--cmove-orig-aet",      "-oa", 1, "C-MOVE originator application entity title (default: '')",
+                                                          "AE Title of peer that invoked the C-MOVE operation from which this C-STORE sub-operation is being performed");
+      
       cmd.addSubGroup("other network options:");
         cmd.addOption("--timeout",             "-to",  1, "[s]econds: integer (default: unlimited)",
                                                           "timeout for connection requests");
@@ -319,6 +328,9 @@ int main(int argc, char *argv[])
         if (cmd.findOption("--multi-associations")) opt_multipleAssociations = OFTrue;
         if (cmd.findOption("--single-association")) opt_multipleAssociations = OFFalse;
         cmd.endOptionBlock();
+
+        if (cmd.findOption("--cmove-orig-msg-id")) app.checkValue(cmd.getValue(opt_moveOriginatorMessageId));
+        if (cmd.findOption("--cmove-orig-aet")) app.checkValue(cmd.getValue(opt_moveOriginatorAET));
 
         if (cmd.findOption("--timeout"))
         {
@@ -457,6 +469,8 @@ int main(int argc, char *argv[])
     storageSCU.setDecompressionMode(opt_decompressionMode);
     storageSCU.setHaltOnUnsuccessfulStoreMode(opt_haltOnUnsuccessfulStore);
     storageSCU.setAllowIllegalProposalMode(opt_allowIllegalProposal);
+
+    storageSCU.setMOVEOriginatorInfo(opt_moveOriginatorAET, opt_moveOriginatorMessageId);
 
     /* output information on the single/multiple associations setting */
     if (opt_multipleAssociations)
