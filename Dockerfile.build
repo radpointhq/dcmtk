@@ -1,4 +1,4 @@
-FROM ubuntu:21.04 as radpoint-cpp-build
+FROM debian:buster as radpoint-cpp-build
 ARG USER=docker
 ARG UID=1000
 ARG GID=1000
