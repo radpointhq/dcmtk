@@ -16,7 +16,6 @@ pipeline {
         dockerfile {
             filename 'Dockerfile.build'
             label 'backend'
-            //args '--mount source=${WORKSPACE},target=/tmp'
             args '-v ${WORKSPACE}:/tmp'
         }
     }
@@ -32,7 +31,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo "[Build] Branch: ${env.BRANCH_NAME}"'
+                sh 'echo "[Build] Branch: ${BRANCH_NAME}"'
                 sh 'cc --version'
                 sh 'c++ --version'
                 sh 'ls -l ${BASE_DIR}'
