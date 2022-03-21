@@ -1,0 +1,39 @@
+FROM ubuntu:21.04 as radpoint-cpp-build
+ARG USER=docker
+ARG UID=1000
+ARG GID=1000
+
+ENV TZ=Europe/Warsaw
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Make sure the image is updated, install some prerequisites,
+# Download the latest version of Clang (official binary) for Ubuntu
+# Extract the archive and add Clang to the PATH
+RUN apt-get update && apt-get install -y \
+  xz-utils \
+  unzip \
+  build-essential \
+  curl \
+  git \
+  libboost-all-dev \
+  cmake \
+  clang-12 \
+  clang-tools-12 \
+  clang-format-12 \
+  lldb-12 \
+  libcurl4-openssl-dev \
+  libsqlite3-dev \
+  libssl-dev \
+  zlib1g-dev \
+  && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100 \
+  && update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100 \
+  && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100 \
+  && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100
+
+RUN useradd -m ${USER} --uid=${UID}
+USER ${UID}:${GID}
+WORKDIR /home/${USER}
+
+
+# Start from a Bash prompt
+CMD [ "/bin/bash" ]
