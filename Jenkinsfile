@@ -35,14 +35,14 @@ pipeline {
                 sh 'cc --version'
                 sh 'c++ --version'
                 sh 'ls -l ${BASE_DIR}'
-                sh 'mkdir -p ${BUILD_DIR}'
-                sh 'cd ${BUILD_DIR}'
-                sh 'cmake \
-                    -DCMAKE_BUILD_TYPE="Release" \
-                    -DDCMTK_ENABLE_PRIVATE_TAGS="ON" \
-                    -DDCMTK_ENABLE_STL="ON" \
-                    ..'
-                sh 'make -j16'
+                dir('${BUILD_DIR}') {
+                    sh 'cmake \
+                        -DCMAKE_BUILD_TYPE="Release" \
+                        -DDCMTK_ENABLE_PRIVATE_TAGS="ON" \
+                        -DDCMTK_ENABLE_STL="ON" \
+                        ..'
+                    sh 'make -j16'
+                }
                 sh 'tar cjf ${ARTIFACT_FILE} -C ${BIN_DIR} .'
             }
         }
