@@ -30,19 +30,20 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo "[Build] Branch: ${BRANCH_NAME}"'
-                sh 'cc --version'
-                sh 'c++ --version'
-                sh 'ls -l ${BASE_DIR}'
-                dir('/tmp/build') {
-                    sh 'cmake \
-                        -DCMAKE_BUILD_TYPE="Release" \
-                        -DDCMTK_ENABLE_PRIVATE_TAGS="ON" \
-                        -DDCMTK_ENABLE_STL="ON" \
-                        ..'
-                    sh 'make -j16'
-                }
-                sh 'tar cjf ${ARTIFACT_FILE} -C /tmp/build/bin .'
+                sh '''
+                echo "[Build] Branch: ${BRANCH_NAME}"
+                cc --version
+                c++ --version
+                ls -l ${BASE_DIR}
+                cd ${BUILD_DIR}
+                cmake \
+                    -DCMAKE_BUILD_TYPE="Release" \
+                    -DDCMTK_ENABLE_PRIVATE_TAGS="ON" \
+                    -DDCMTK_ENABLE_STL="ON" \
+                    ..
+                make -j16
+                tar cjf ${ARTIFACT_FILE} -C ${BUILD_DIR}/bin .
+                '''
             }
         }
     }

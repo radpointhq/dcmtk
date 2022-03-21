@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN useradd -m ${USER} --uid=${UID}
 USER ${UID}:${GID}
-WORKDIR /home/${USER}
+WORKDIR /tmp
 
 
 # Start from a Bash prompt
