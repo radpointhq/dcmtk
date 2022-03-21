@@ -17,10 +17,10 @@ RUN apt-get update && apt-get install -y \
   git \
   libboost-all-dev \
   cmake \
-  clang-12 \
-  clang-tools-12 \
-  clang-format-12 \
-  lldb-12 \
+  clang \
+  clang-tools \
+  clang-format \
+  lldb \
   libcurl4-openssl-dev \
   libsqlite3-dev \
   libssl-dev \
@@ -29,10 +29,8 @@ RUN apt-get update && apt-get install -y \
   libtiff-dev \
   libxml2-dev \
   zlib1g-dev \
-  && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100 \
-  && update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100 \
-  && update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100 \
-  && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100
+  && update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100 \
+  && update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
 
 RUN useradd -m ${USER} --uid=${UID}
 USER ${UID}:${GID}
