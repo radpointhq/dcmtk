@@ -16,7 +16,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile.build'
             label 'backend'
-            args '--mount source=${env.WORKSPACE},target=${BASE_DIR}'
+            args '--mount source=${env.WORKSPACE},target=/tmp'
         }
     }
 

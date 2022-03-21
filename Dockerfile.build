@@ -24,6 +24,10 @@ RUN apt-get update && apt-get install -y \
   libcurl4-openssl-dev \
   libsqlite3-dev \
   libssl-dev \
+  libpng-dev \
+  libjpeg-dev \
+  libtiff-dev \
+  libxml2-dev \
   zlib1g-dev \
   && update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100 \
   && update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100 \
