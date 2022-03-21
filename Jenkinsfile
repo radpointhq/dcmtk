@@ -8,7 +8,6 @@ pipeline {
     environment {
         BASE_DIR = "/tmp"
         BUILD_DIR = "/tmp/build"
-        BIN_DIR = "/tmp/build/bin"
         ARTIFACT_FILE = "dcmtk.tar.bz2"
     }
 
@@ -35,7 +34,7 @@ pipeline {
                 sh 'cc --version'
                 sh 'c++ --version'
                 sh 'ls -l ${BASE_DIR}'
-                dir('${BUILD_DIR}') {
+                dir('/tmp/build') {
                     sh 'cmake \
                         -DCMAKE_BUILD_TYPE="Release" \
                         -DDCMTK_ENABLE_PRIVATE_TAGS="ON" \
@@ -43,7 +42,7 @@ pipeline {
                         ..'
                     sh 'make -j16'
                 }
-                sh 'tar cjf ${ARTIFACT_FILE} -C ${BIN_DIR} .'
+                sh 'tar cjf ${ARTIFACT_FILE} -C /tmp/build/bin .'
             }
         }
     }
