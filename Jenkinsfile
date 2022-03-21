@@ -50,7 +50,7 @@ pipeline {
 
     post {
         success {
-            archiveArtifacts artifacts: "${BUILD_DIR}/${ARTIFACT_FILE}"
+            archiveArtifacts artifacts: "build/${ARTIFACT_FILE}"
         }
     }
 }
