@@ -1,12 +1,12 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2023, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
- *  Header file for class CID7453_PerformingRoles
+ *  Header file for class CID7453_PerformingRole
  *
- *  Generated automatically from DICOM PS 3.16-2021d
- *  File created on 2021-09-13 09:26:38 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2023a
+ *  File created on 2023-02-02 17:56:56 by J. Riesmeier
  *
  */
 
@@ -27,16 +27,16 @@
  *---------------------*/
 
 /** Implementation of DCMR Context Group:
- *  CID 7453 - Performing Roles.
+ *  CID 7453 - Performing Role.
  *  (type: extensible, version: 20180326)
  */
-class DCMTK_CMR_EXPORT CID7453_PerformingRoles
+class DCMTK_CMR_EXPORT CID7453_PerformingRole
   : public DSRContextGroup
 {
 
   public:
 
-    /** types of performing roles
+    /** types of performing role
      */
     enum EnumType
     {
@@ -82,15 +82,15 @@ class DCMTK_CMR_EXPORT CID7453_PerformingRoles
      *                         for this context group, i.e. no checks are performed.
      *                         Call DSRContextGroup::checkSelectedValue() if needed.
      */
-    CID7453_PerformingRoles(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
+    CID7453_PerformingRole(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
 
     /** constructor
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
      *                                current value
      ** @param  enhancedEncodingMode  set enhanced encoding mode for coded entry (if enabled)
      */
-    CID7453_PerformingRoles(const EnumType selectedValue,
-                            const OFBool enhancedEncodingMode = OFFalse);
+    CID7453_PerformingRole(const EnumType selectedValue,
+                           const OFBool enhancedEncodingMode = OFFalse);
 
     /** select a coded entry given by its type as the current value
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
@@ -184,7 +184,7 @@ class DCMTK_CMR_EXPORT CID7453_PerformingRoles
  *-------------------*/
 
 // define short name for the context group class
-typedef CID7453_PerformingRoles CMR_CID7453;
+typedef CID7453_PerformingRole CMR_CID7453;
 
 
 #endif

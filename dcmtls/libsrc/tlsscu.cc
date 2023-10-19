@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2010-2021, OFFIS e.V.
+ *  Copyright (C) 2010-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -107,6 +107,7 @@ OFCondition DcmTLSSCU::initNetwork()
   {
     if (m_tLayer->addTrustedCertificateDir( (*certDir).c_str(), m_certKeyFileFormat).bad())
       DCMNET_WARN("Unable to load certificates from directory '" << *certDir<< "', ignoring");
+    certDir++;
   }
 
   /* If authentication of both sides (and not only encryption) is desired,
@@ -124,7 +125,8 @@ OFCondition DcmTLSSCU::initNetwork()
       DCMTLS_ERROR("Unable to create TLS transport layer for SCP: Unable to load private TLS key from file " << m_privateKeyFile);
     }
     // Set file that contains host certificate
-    if (cond.good()) cond = m_tLayer->setCertificateFile(m_certificateFile.c_str(), m_certKeyFileFormat);
+    // Ensure that the certificate fulfils the requirements for the default TLS profile
+    if (cond.good()) cond = m_tLayer->setCertificateFile(m_certificateFile.c_str(), m_certKeyFileFormat, TSP_Profile_BCP_195_RFC_8996);
     if (cond.bad())
     {
       DCMTLS_ERROR("Unable to load SCP certificate from file " << m_certificateFile);

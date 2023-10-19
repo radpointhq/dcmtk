@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2000-2021, OFFIS e.V.
+ *  Copyright (C) 2000-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -333,7 +333,7 @@ static const S_DocumentTypeNameMap DocumentTypeNameMap[] =
     {DSRTypes::DT_EnhancedXRayRadiationDoseSR,           UID_EnhancedXRayRadiationDoseSRStorage,              EM_EnhancedEquipment,                                             "SR", "Enhanced X-Ray Radiation Dose SR"},
     {DSRTypes::DT_SpectaclePrescriptionReport,           UID_SpectaclePrescriptionReportStorage,              EM_EnhancedEquipment,                                             "SR", "Spectacle Prescription Report"},
     {DSRTypes::DT_MacularGridThicknessAndVolumeReport,   UID_MacularGridThicknessAndVolumeReportStorage,      EM_EnhancedEquipment,                                             "SR", "Macular Grid Thickness and Volume Report"},
-    {DSRTypes::DT_ImplantationPlanSRDocument,            UID_ImplantationPlanSRDocumentStorage,               EM_EnhancedEquipment,                                             "SR", "Implantation Plan SR Document"},
+    {DSRTypes::DT_ImplantationPlanSRDocument,            UID_ImplantationPlanSRStorage,                       EM_EnhancedEquipment,                                             "SR", "Implantation Plan SR Document"},
     {DSRTypes::DT_Comprehensive3DSR,                     UID_Comprehensive3DSRStorage,                        0,                                                                "SR", "Comprehensive 3D SR"},
     {DSRTypes::DT_RadiopharmaceuticalRadiationDoseSR,    UID_RadiopharmaceuticalRadiationDoseSRStorage,       EM_EnhancedEquipment,                                             "SR", "Radiopharmaceutical Radiation Dose SR"},
     {DSRTypes::DT_ExtensibleSR,                          UID_ExtensibleSRStorage,                             EM_EnhancedEquipment,                                             "SR", "Extensible SR"},
@@ -397,7 +397,8 @@ static const S_PresentationStateTypeNameMap PresentationStateTypeNameMap[] =
     {DSRTypes::PT_AdvancedBlending,         UID_AdvancedBlendingPresentationStateStorage,                   "ABPS"},
     {DSRTypes::PT_VolumeRendering,          UID_VolumeRenderingVolumetricPresentationStateStorage,          "VR-VPS"},
     {DSRTypes::PT_SegmentedVolumeRendering, UID_SegmentedVolumeRenderingVolumetricPresentationStateStorage, "SVR-VPS"},
-    {DSRTypes::PT_MultipleVolumeRendering,  UID_MultipleVolumeRenderingVolumetricPresentationStateStorage,  "MVR-VPS"}
+    {DSRTypes::PT_MultipleVolumeRendering,  UID_MultipleVolumeRenderingVolumetricPresentationStateStorage,  "MVR-VPS"},
+    {DSRTypes::PT_VariableModalityLUT,      UID_VariableModalityLUTSoftcopyPresentationStateStorage,        "VML-SPS"}
 };
 
 
@@ -483,6 +484,7 @@ static const S_CharacterSetNameMap CharacterSetNameMap[] =
     {DSRTypes::CS_Greek,          "ISO_IR 126",                     "ISO-8859-7",  "ISO-8859-7"},
     {DSRTypes::CS_Hebrew,         "ISO_IR 138",                     "ISO-8859-8",  "ISO-8859-8"},
     {DSRTypes::CS_Latin5,         "ISO_IR 148",                     "ISO-8859-9",  "ISO-8859-9"},
+    {DSRTypes::CS_Latin9,         "ISO_IR 203",                     "ISO-8859-15", "ISO-8859-15"},
     {DSRTypes::CS_Thai,           "ISO_IR 166",                     "TIS-620",     "TIS-620"},
     {DSRTypes::CS_Japanese,       "ISO 2022 IR 13\\ISO 2022 IR 87", "ISO-2022-JP", "ISO-2022-JP"},
     {DSRTypes::CS_Korean,         "ISO 2022 IR 6\\ISO 2022 IR 149", "ISO-2022-KR", "ISO-2022-KR"},

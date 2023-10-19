@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1994-2021, OFFIS e.V.
+ *  Copyright (C) 1994-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -626,10 +626,10 @@ insertIntoSet(DcmStack &stack, const E_TransferSyntax xfer, const DcmTagKey &tag
         }
         else if (newElementError == EC_InvalidTag)
         {
-            if (tag.getXTag() == DCM_Item)
+            if (tag == DCM_Item)
             {
                 DcmItem *item = NULL;
-                if (topOfStack->getTag().getXTag() == DCM_DirectoryRecordSequence)
+                if (topOfStack->getTag() == DCM_DirectoryRecordSequence)
                 {
                     // an Item must be pushed to the stack
                     item = new DcmDirectoryRecord(tag, 0);
@@ -792,7 +792,7 @@ int main(int argc, char *argv[])
     cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
     cmd.addParam("dumpfile-in", "dump input filename");
-    cmd.addParam("dcmfile-out", "DICOM output filename");
+    cmd.addParam("dcmfile-out", "DICOM output filename (\"-\" for stdout)");
 
     cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
      cmd.addOption("--help",                   "-h",     "print this help text and exit", OFCommandLine::AF_Exclusive);
@@ -1012,7 +1012,7 @@ int main(int argc, char *argv[])
     }
     OFLOG_INFO(dump2dcmLogger, "reading dump file: " << opt_ifname);
 
-    FILE *dumpfile = fopen(opt_ifname, "r");
+    FILE *dumpfile = fopen(opt_ifname, "rb");
     if (!dumpfile)
     {
         OFLOG_FATAL(dump2dcmLogger, "input file does not exist: " << opt_ifname);

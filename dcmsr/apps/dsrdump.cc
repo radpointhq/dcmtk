@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2000-2016, OFFIS e.V.
+ *  Copyright (C) 2000-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -37,10 +37,6 @@
 #include "dcmtk/ofstd/ofchrenc.h"     /* for OFCharacterEncoding */
 #endif
 
-#ifndef HAVE_WINDOWS_H
-#define ANSI_ESCAPE_CODES_AVAILABLE
-#endif
-
 #define OFFIS_CONSOLE_APPLICATION "dsrdump"
 
 static OFLogger dsrdumpLogger = OFLog::getLogger("dcmtk.apps." OFFIS_CONSOLE_APPLICATION);
@@ -60,68 +56,41 @@ static OFCondition dumpFile(STD_NAMESPACE ostream &out,
                             const size_t printFlags,
                             const OFBool convertToUTF8)
 {
-    OFCondition result = EC_Normal;
-
-    if ((ifname == NULL) || (strlen(ifname) == 0))
+    OFCondition result = EC_IllegalParameter;
+    if ((ifname != NULL) && (strlen(ifname) > 0))
     {
-        OFLOG_FATAL(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": invalid filename: <empty string>");
-        return EC_IllegalParameter;
-    }
-
-    DcmFileFormat *dfile = new DcmFileFormat();
-    if (dfile != NULL)
-    {
-        if (readMode == ERM_dataset)
-            result = dfile->getDataset()->loadFile(ifname, xfer);
-        else
-            result = dfile->loadFile(ifname, xfer);
+        DcmFileFormat dfile;
+        result = dfile.loadFile(ifname, xfer, EGL_noChange, DCM_MaxReadLength /* default */, readMode);
         if (result.bad())
-        {
-            OFLOG_FATAL(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": error (" << result.text()
-                << ") reading file: " << ifname);
-        }
-    } else
-        result = EC_MemoryExhausted;
-
+            OFLOG_ERROR(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": error (" << result.text() << ") reading file: " << ifname);
 #ifdef DCMTK_ENABLE_CHARSET_CONVERSION
-    if (result.good())
-    {
-        if (convertToUTF8)
+        if (result.good())
         {
-            OFLOG_INFO(dsrdumpLogger, "converting all element values that are affected by Specific Character Set (0008,0005) to UTF-8");
-            result = dfile->convertToUTF8();
-            if (result.bad())
+            if (convertToUTF8)
             {
-                OFLOG_FATAL(dsrdumpLogger, result.text() << ": converting file to UTF-8: " << ifname);
+                OFLOG_INFO(dsrdumpLogger, "converting all element values that are affected by Specific Character Set (0008,0005) to UTF-8");
+                result = dfile.convertToUTF8();
+                if (result.bad())
+                    OFLOG_ERROR(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": error (" << result.text() << ") converting file to UTF-8: " << ifname);
             }
         }
-    }
 #else
-    // avoid compiler warning on unused variable
-    (void)convertToUTF8;
+        // avoid compiler warning on unused variable
+        (void)convertToUTF8;
 #endif
-    if (result.good())
-    {
-        result = EC_CorruptedData;
-        DSRDocument *dsrdoc = new DSRDocument();
-        if (dsrdoc != NULL)
+        if (result.good())
         {
-            result = dsrdoc->read(*dfile->getDataset(), readFlags);
+            DSRDocument dsrdoc;
+            result = dsrdoc.read(*dfile.getDataset(), readFlags);
             if (result.good())
             {
-                result = dsrdoc->print(out, printFlags);
+                result = dsrdoc.print(out, printFlags);
                 out << OFendl;
-            }
-            else
-            {
-                OFLOG_FATAL(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": error (" << result.text()
-                    << ") parsing file: " << ifname);
-            }
+            } else
+                OFLOG_ERROR(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": error (" << result.text() << ") parsing file: " << ifname);
         }
-        delete dsrdoc;
-    }
-    delete dfile;
-
+    } else
+        OFLOG_ERROR(dsrdumpLogger, OFFIS_CONSOLE_APPLICATION << ": invalid filename: <empty string>");
     return result;
 }
 
@@ -144,7 +113,7 @@ int main(int argc, char *argv[])
     cmd.setOptionColumns(LONGCOL, SHORTCOL);
     cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
-    cmd.addParam("dsrfile-in", "DICOM SR input filename to be dumped", OFCmdParam::PM_MultiMandatory);
+    cmd.addParam("dsrfile-in", "DICOM SR input filename to be dumped\n(\"-\" for stdin)", OFCmdParam::PM_MultiMandatory);
 
     cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
       cmd.addOption("--help",                   "-h",   "print this help text and exit", OFCommandLine::AF_Exclusive);
@@ -198,11 +167,9 @@ int main(int argc, char *argv[])
       cmd.addSubGroup("enhanced encoding mode:");
         cmd.addOption("--indicate-enhanced",    "+Pe",  "indicate that enhanced mode is used for codes");
         cmd.addOption("--no-enhanced-mode",     "-Pe",  "do not indicate enhanced mode (default)");
-#ifdef ANSI_ESCAPE_CODES_AVAILABLE
       cmd.addSubGroup("color:");
         cmd.addOption("--print-color",          "+C",   "use ANSI escape codes for colored output");
         cmd.addOption("--no-color",             "-C",   "do not use any ANSI escape codes (default)");
-#endif
 
     /* evaluate command line */
     prepareCmdLineArgs(argc, argv, OFFIS_CONSOLE_APPLICATION);
@@ -336,14 +303,12 @@ int main(int argc, char *argv[])
             opt_printFlags &= ~DSRTypes::PF_indicateEnhancedEncodingMode;
         cmd.endOptionBlock();
 
-#ifdef ANSI_ESCAPE_CODES_AVAILABLE
         cmd.beginOptionBlock();
         if (cmd.findOption("--print-color"))
             opt_printFlags |= DSRTypes::PF_useANSIEscapeCodes;
         if (cmd.findOption("--no-color"))
             opt_printFlags &= ~DSRTypes::PF_useANSIEscapeCodes;
         cmd.endOptionBlock();
-#endif
     }
 
     /* print resource identifier */

@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2022, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  Header file for class TID1500_MeasurementReport
@@ -25,11 +25,12 @@
 #include "dcmtk/dcmsr/cmr/tid1501.h"
 #include "dcmtk/dcmsr/cmr/tid1600.h"
 #include "dcmtk/dcmsr/cmr/cid100.h"
+#include "dcmtk/dcmsr/cmr/cid218e.h"
 #include "dcmtk/dcmsr/cmr/cid6147.h"
 #include "dcmtk/dcmsr/cmr/cid7021.h"
 #include "dcmtk/dcmsr/cmr/cid7181.h"
 #include "dcmtk/dcmsr/cmr/cid7464.h"
-#include "dcmtk/dcmsr/cmr/cid7469.h"
+#include "dcmtk/dcmsr/cmr/cid7551.h"
 
 
 // include this file in doxygen documentation
@@ -76,26 +77,27 @@ class DCMTK_CMR_EXPORT TID1500_MeasurementReport
   public:
 
     // type definitions
-    typedef TID1411_VolumetricROIMeasurements<CID7469_GenericIntensityAndSizeMeasurements,
-                                              CID7181_AbstractMultiDimensionalImageModelComponentUnits,
+    typedef TID1411_VolumetricROIMeasurements<CID218e_QuantitativeImageFeature,
+                                              CID7181_AbstractMultiDimensionalImageModelComponentUnit,
                                               CID6147_ResponseCriteria,
-                                              CID7464_GeneralRegionOfInterestMeasurementModifiers>
+                                              CID7464_GeneralRegionOfInterestMeasurementModifier>
             TID1411_Measurements;
 
-    typedef TID1501_MeasurementGroup<CID7469_GenericIntensityAndSizeMeasurements,
-                                     CID7181_AbstractMultiDimensionalImageModelComponentUnits,
+    typedef TID1501_MeasurementGroup<CID218e_QuantitativeImageFeature,
+                                     CID7181_AbstractMultiDimensionalImageModelComponentUnit,
                                      CID6147_ResponseCriteria,
-                                     CID7464_GeneralRegionOfInterestMeasurementModifiers>
+                                     CID7464_GeneralRegionOfInterestMeasurementModifier,
+                                     CID7551_GenericPurposeOfReferenceToImagesAndCoordinatesInMeasurement>
             TID1501_Measurements;
 
     /** (default) constructor.
      *  Also creates an initial, almost empty measurement report by calling
      *  createNewMeasurementReport(), but only if a non-empty 'title' is passed.
      ** @param  title  optional document title to be set (from CID 7021 - Measurement
-     *                 Report Document Titles), i.e.\ the concept name of the root node
+     *                 Report Document Title), i.e.\ the concept name of the root node
      *  @param  check  if enabled, check value for validity before setting it
      */
-    TID1500_MeasurementReport(const CID7021_MeasurementReportDocumentTitles &title = CID7021_MeasurementReportDocumentTitles(),
+    TID1500_MeasurementReport(const CID7021_MeasurementReportDocumentTitle &title = CID7021_MeasurementReportDocumentTitle(),
                               const OFBool check = OFTrue);
 
     /** clear internal member variables.
@@ -243,34 +245,34 @@ class DCMTK_CMR_EXPORT TID1500_MeasurementReport
      *  Clear the report and create the mandatory and other supported content items of
      *  this template, i.e.\ TID 1500 - Row 1 to 6 and 8 to 9.
      ** @param  title  document title to be set (from CID 7021 - Measurement Report
-     *                 Document Titles), i.e.\ the concept name of the root node
+     *                 Document Title), i.e.\ the concept name of the root node
      *  @param  check  if enabled, check value for validity before setting it
      ** @return status, EC_Normal if successful, an error code otherwise
      */
-    OFCondition createNewMeasurementReport(const CID7021_MeasurementReportDocumentTitles &title,
+    OFCondition createNewMeasurementReport(const CID7021_MeasurementReportDocumentTitle &title,
                                            const OFBool check = OFTrue);
 
     /** set language of this report as defined by TID 1204 (Language of Content Item and
      *  Descendants)
      ** @param  language  language of the report, being a language that is primarily
-     *                    used for human communication (from CID 5000 - Languages)
+     *                    used for human communication (from CID 5000 - Language)
      *  @param  country   coded entry that describes the country-specific variant of
-     *                    'language' (optional, from CID 5001 - Countries)
+     *                    'language' (optional, from CID 5001 - Country)
      *  @param  check     if enabled, check values for validity before setting them
      ** @return status, EC_Normal if successful, an error code otherwise
      */
-    OFCondition setLanguage(const CID5000_Languages &language,
-                            const CID5001_Countries &country = CID5001_Countries(),
+    OFCondition setLanguage(const CID5000_Language &language,
+                            const CID5001_Country &country = CID5001_Country(),
                             const OFBool check = OFTrue);
 
     /** add the imaging procedure whose results are reported (TID 1500 - Row 4).
      *  There should be at least a single instance of the associated content item.
      ** @param  procedure  coded entry that describes the imaging procedure to be added
-     *                     (from CID 100 - Quantitative Diagnostic Imaging Procedures)
+     *                     (from CID 100 - Quantitative Diagnostic Imaging Procedure)
      *  @param  check      if enabled, check value for validity before setting it
      ** @return status, EC_Normal if successful, an error code otherwise
      */
-    OFCondition addProcedureReported(const CID100_QuantitativeDiagnosticImagingProcedures &procedure,
+    OFCondition addProcedureReported(const CID100_QuantitativeDiagnosticImagingProcedure &procedure,
                                      const OFBool check = OFTrue);
 
     /** create another instance of TID 1411 (Volumetric ROI Measurements) and add it as
@@ -333,7 +335,7 @@ class DCMTK_CMR_EXPORT TID1500_MeasurementReport
      *  @param  check  if enabled, check value for validity before setting it
      ** @return status, EC_Normal if successful, an error code otherwise
      */
-    OFCondition createMeasurementReport(const CID7021_MeasurementReportDocumentTitles &title,
+    OFCondition createMeasurementReport(const CID7021_MeasurementReportDocumentTitle &title,
                                         const OFBool check);
 
     /** create the 'Qualitative Evaluations' content item (TID 1500 - Row 12) if not

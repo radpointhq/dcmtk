@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2000-2021, OFFIS e.V.
+ *  Copyright (C) 2000-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -72,7 +72,7 @@ extern DCMTK_DCMSR_EXPORT OFLogger DCM_dcmsrLogger;
 // protocol, hostname and CGI script name used for HTML hyperlinks to composite objects
 #define HTML_HYPERLINK_PREFIX_FOR_CGI "http://localhost/dicom.cgi"
 // URL of the DICOM toolkit DCMTK
-#define DCMTK_INTERNET_URL "http://dicom.offis.de/dcmtk"
+#define DCMTK_INTERNET_URL "https://www.dcmtk.org/"
 
 // XML namespace URI for dcmsr module
 #define DCMSR_XML_NAMESPACE_URI "http://dicom.offis.de/dcmsr"
@@ -653,8 +653,10 @@ class DCMTK_DCMSR_EXPORT DSRTypes
         PT_SegmentedVolumeRendering,
         /// Multiple Volume Rendering Volumetric Presentation State (MVR-VPS)
         PT_MultipleVolumeRendering,
+        /// Variable Modality LUT Softcopy Presentation State (VML-SPS)
+        PT_VariableModalityLUT,
         /// internal type used to mark the last entry
-        PT_last = PT_MultipleVolumeRendering
+        PT_last = PT_VariableModalityLUT
     };
 
     /** SR graphic types.  Used for content item SCOORD.
@@ -813,6 +815,8 @@ class DCMTK_DCMSR_EXPORT DSRTypes
         CS_Hebrew,
         /// ISO-IR 148: Latin alphabet No. 5
         CS_Latin5,
+        /// ISO-IR 203: Latin alphabet No. 9
+        CS_Latin9,
         /// ISO-IR 166: Thai
         CS_Thai,
         /// ISO-IR 13/87: Japanese (Katakana/Romaji/Kanji)

@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2000-2021, OFFIS e.V.
+ *  Copyright (C) 2000-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -49,6 +49,7 @@
 #include "dcmtk/dcmsign/sitsfs.h"
 
 BEGIN_EXTERN_C
+#include <openssl/conf.h>
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <openssl/ssl.h>
@@ -67,6 +68,7 @@ static OSSL_PROVIDER *defaultProvider = NULL;
 
 void DcmSignature::initializeLibrary()
 {
+  OPENSSL_no_config();
   SSL_library_init();
   SSL_load_error_strings();
   OpenSSL_add_all_algorithms();
@@ -964,7 +966,7 @@ OFCondition DcmSignature::getCurrentMacXferSyntaxName(OFString& str)
     if ((((DcmElement *)(stack.top()))->getString(uid)).good() && uid)
     {
       DcmXfer xf(uid);
-      if (xf.getXfer() == EXS_Unknown) str=uid; else
+      if (xf == EXS_Unknown) str=uid; else
       {
         str = "=";
         str.append(xf.getXferName());

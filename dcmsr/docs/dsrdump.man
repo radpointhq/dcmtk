@@ -30,7 +30,7 @@ with a particular transfer syntax.
 \section dsrdump_parameters PARAMETERS
 
 \verbatim
-dsrfile-in  DICOM SR input filename to be dumped
+dsrfile-in  DICOM SR input filename to be dumped ("-" for stdin)
 \endverbatim
 
 \section dsrdump_options OPTIONS
@@ -195,12 +195,8 @@ color:
   +C    --print-color
           use ANSI escape codes for colored output
 
-          # not available on Windows systems
-
   -C    --no-color
           do not use any ANSI escape codes (default)
-
-          # not available on Windows systems
 \endverbatim
 
 \section dsrdump_notes NOTES
@@ -223,7 +219,7 @@ ChestCADSRStorage                            1.2.840.10008.5.1.4.1.1.88.65
 XRayRadiationDoseSRStorage                   1.2.840.10008.5.1.4.1.1.88.67
 RadiopharmaceuticalRadiationDoseSRStorage    1.2.840.10008.5.1.4.1.1.88.68
 ColonCADSRStorage                            1.2.840.10008.5.1.4.1.1.88.69
-ImplantationPlanSRDocumentStorage            1.2.840.10008.5.1.4.1.1.88.70
+ImplantationPlanSRStorage                    1.2.840.10008.5.1.4.1.1.88.70
 AcquisitionContextSRStorage                  1.2.840.10008.5.1.4.1.1.88.71
 SimplifiedAdultEchoSRStorage                 1.2.840.10008.5.1.4.1.1.88.72
 PatientRadiationDoseSRStorage                1.2.840.10008.5.1.4.1.1.88.73
@@ -294,6 +290,6 @@ It is an error if no data dictionary can be loaded.
 
 \section dsrdump_copyright COPYRIGHT
 
-Copyright (C) 2000-2019 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+Copyright (C) 2000-2023 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
 
 */

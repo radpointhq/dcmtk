@@ -341,17 +341,28 @@ certification authority:
 
 security profile:
 
+  +pg   --profile-8996
+          BCP 195 RFC 8996 TLS Profile (default)
+
+  +pm   --profile-8996-mod
+          Modified BCP 195 RFC 8996 TLS Profile
+
+          # only available if underlying TLS library supports
+          # all TLS features required for this profile
+
   +py   --profile-bcp195-nd
-          Non-downgrading BCP 195 TLS Profile (default)
+          Non-downgrading BCP 195 TLS Profile (retired)
 
   +px   --profile-bcp195
-          BCP 195 TLS Profile
+          BCP 195 TLS Profile (retired)
 
   +pz   --profile-bcp195-ex
-          Extended BCP 195 TLS Profile
+          Extended BCP 195 TLS Profile (retired)
 
   +pb   --profile-basic
           Basic TLS Secure Transport Connection Profile (retired)
+
+          # only available if underlying TLS library supports 3DES
 
   +pa   --profile-aes
           AES TLS Secure Transport Connection Profile (retired)
@@ -367,6 +378,14 @@ ciphersuite:
 
   +cs   --cipher  [c]iphersuite name: string
           add ciphersuite to list of negotiated suites
+
+server name indication:
+
+        --no-sni
+          do not use SNI (default)
+
+        --request-sni  [s]erver name: string
+          request server name s
 
 pseudo random generator:
 
@@ -522,6 +541,19 @@ negotiation profiles" which may be read from a configuration file.
 The format and semantics of this configuration file are documented in
 \e asconfig.txt.
 
+\subsection storescu_userid User Identity Negotiation
+
+When specifying user name and/or password using options \e --user and
+\-e --password, the value has to be provided in UTF-8 encoding.
+
+If the option \e --pos-response is used, the SCP is asked to explicitly
+respond, i.e. acknowledge, the user credentials provided in the \b storescu
+request.  Otherwise, if no such response is sent, \b storescu will not
+continue but instead abort the connection.  Since User Identity Negotiation
+is an optional feature that has been introduced later into the standard,
+many SCPs will not check the user identity provided and therefore will not
+provide a user identity response at all.
+
 \section storescu_logging LOGGING
 
 The level of logging output of the various command line tools and underlying
@@ -590,6 +622,6 @@ It is an error if no data dictionary can be loaded.
 
 \section storescu_copyright COPYRIGHT
 
-Copyright (C) 1996-2021 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+Copyright (C) 1996-2023 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
 
 */

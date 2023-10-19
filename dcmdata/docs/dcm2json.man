@@ -29,9 +29,9 @@ with a particular transfer syntax.
 \section dcm2json_parameters PARAMETERS
 
 \verbatim
-dcmfile-in    DICOM input filename to be converted
+dcmfile-in   DICOM input filename to be converted ("-" for stdin)
 
-jsonfile-out  JSON output filename (default: stdout)
+jsonfile-out JSON output filename (default: stdout)
 \endverbatim
 
 \section dcm2json_options OPTIONS
@@ -98,11 +98,23 @@ input transfer syntax:
 \subsection dcm2json_processing_options processing options
 \verbatim
 encoding of infinity and not-a-number:
+
   -es  --encode-strict
          report error for 'inf' and 'nan' (default)
 
   -ee  --encode-extended
          permit 'inf' and 'nan' in JSON numbers
+
+encoding of IS and DS (integer/decimal string) elements:
+
+  -ia  --is-ds-auto
+         encode as number if valid, as string otherwise (default)
+
+  -in  --is-ds-num
+         always encode as number, fail if invalid
+
+  -is  --is-ds-string
+         always encode as string
 \endverbatim
 
 \subsection dcm2json_output_options output options
@@ -213,7 +225,7 @@ the following (see DICOM Part 18 Section F for details):
         ]
     },
     "00100030": {
-        "vr": "DT",
+        "vr": "DA",
         "Value": [
             "19670701"
         ]
@@ -401,6 +413,6 @@ It is an error if no data dictionary can be loaded.
 
 \section dcm2json_copyright COPYRIGHT
 
-Copyright (C) 2016-2021 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+Copyright (C) 2016-2023 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
 
 */

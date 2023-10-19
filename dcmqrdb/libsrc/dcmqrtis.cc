@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1993-2021, OFFIS e.V.
+ *  Copyright (C) 1993-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -624,7 +624,7 @@ OFBool DcmQueryRetrieveTelnetInitiator::TI_attachAssociation()
         OFStandard::strlcpy(currentAETitle, dbEntries[currentdb]->title, sizeof(currentAETitle));
     }
 
-    cond = ASC_createAssociationParameters(&params, maxReceivePDULength);
+    cond = ASC_createAssociationParameters(&params, maxReceivePDULength, dcmConnectionTimeout.get());
     if (cond.bad()) {
         DCMQRDB_ERROR("Help, cannot create association parameters: " << DimseCondition::dump(temp_str, cond));
         return OFFalse;
@@ -1911,7 +1911,7 @@ OFBool DcmQueryRetrieveTelnetInitiator::TI_buildSeries(TI_DBEntry *db, TI_StudyE
     query = NULL;
 
     if (study->seriesCount > 0) {
-        /* sort the seriesinto assending series number order */
+        /* sort the series into ascending series number order */
         qsort(study->series, study->seriesCount, sizeof(study->series[0]),
               TI_seriesCompare);
     }
@@ -2000,7 +2000,7 @@ OFBool DcmQueryRetrieveTelnetInitiator::TI_buildImages(TI_DBEntry *db, TI_StudyE
     }
 
     if (series->imageCount > 0) {
-        /* sort the images into assending image number order */
+        /* sort the images into ascending image number order */
         qsort(series->images, series->imageCount, sizeof(series->images[0]),
             TI_imageCompare);
     }

@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2019-2021, OFFIS e.V.
+ *  Copyright (C) 2019-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -62,7 +62,7 @@ static OFLogger tRoundLogger = OFLog::getLogger("dcmtk.test.t_roundtrip");
 //    4 GB, otherwise the calls to writeDataset() will fail.
 // The test dcmect/tests/t_huge_concat.cc allows for exercising
 // "unlimited" pixel data size using writeConcatenation() on all
-// occassions.
+// occasions.
 
 static const Uint16 NUM_ROWS             = 2;
 static const Uint16 NUM_COLS             = 2;
@@ -500,13 +500,11 @@ static void checkConcatenationInstance(size_t numInstance, EctEnhancedCT* srcIns
 
         FunctionalGroups::const_iterator srcShared = srcInstance->getFunctionalGroups().getShared()->begin();
         FunctionalGroups::const_iterator cShared   = concat->getFunctionalGroups().getShared()->begin();
-        size_t numShared                           = 0;
         do
         {
             OFCHECK(srcShared->second->compare(*cShared->second) == 0);
             srcShared++;
             cShared++;
-            numShared++;
         } while ((srcShared != srcInstance->getFunctionalGroups().getShared()->end())
                  && (cShared != concat->getFunctionalGroups().getShared()->end()));
         OFCHECK((srcShared == srcInstance->getFunctionalGroups().getShared()->end())
@@ -662,7 +660,7 @@ static void prepareExpectedDump()
 {
     EXPECTED_DUMP += "\n";
     EXPECTED_DUMP += "# Dicom-Data-Set\n";
-    // DcmDataset.print() produces dumps in local endianess, so make sure the dump reflects the current machine
+    // DcmDataset.print() produces dumps in local endianness, so make sure the dump reflects the current machine
     if (gLocalByteOrder == EBO_LittleEndian)
         EXPECTED_DUMP += "# Used TransferSyntax: Little Endian Explicit\n";
     else

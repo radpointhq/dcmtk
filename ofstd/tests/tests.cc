@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2011-2019, OFFIS e.V.
+ *  Copyright (C) 2011-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -22,6 +22,11 @@
 #include "dcmtk/config/osconfig.h"
 
 #define OFTEST_OFSTD_ONLY
+
+#ifdef _WIN32
+#define OFTEST_INCLUDE_IPC_OPTION
+#endif
+
 #include "dcmtk/ofstd/oftest.h"
 #include "dcmtk/ofstd/ofxml.h"
 
@@ -86,5 +91,7 @@ OFTEST_REGISTER(ofstd_error);
 OFTEST_REGISTER(ofstd_filesystem);
 OFTEST_REGISTER(ofstd_snprintf);
 OFTEST_REGISTER(ofstd_OFStringUtil_replace_all);
+OFTEST_REGISTER(ofstd_gethostnamebyaddress);
+OFTEST_REGISTER(ofstd_ipc);
 
 OFTEST_MAIN("ofstd")

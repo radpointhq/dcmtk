@@ -1,12 +1,12 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2023, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
- *  Header file for class CID4031_CommonAnatomicRegions
+ *  Header file for class CID4031_CommonAnatomicRegion
  *
- *  Generated automatically from DICOM PS 3.16-2021d
- *  File created on 2021-09-13 09:26:34 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2023a
+ *  File created on 2023-02-02 17:56:50 by J. Riesmeier
  *
  */
 
@@ -27,16 +27,16 @@
  *---------------------*/
 
 /** Implementation of DCMR Context Group:
- *  CID 4031 - Common Anatomic Regions.
- *  (type: extensible, version: 20210120)
+ *  CID 4031 - Common Anatomic Region.
+ *  (type: extensible, version: 20221224)
  */
-class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
+class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegion
   : public DSRContextGroup
 {
 
   public:
 
-    /** types of common anatomic regions
+    /** types of common anatomic region
      */
     enum EnumType
     {
@@ -70,7 +70,7 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
         Calcaneus,
         /// (122494005,SCT,"Cervical spine")
         CervicalSpine,
-        /// (297171002,SCT,"Cervico-thoracic spine")
+        /// (1217257000,SCT,"Cervico-thoracic spine")
         CervicoThoracicSpine,
         /// (816094009,SCT,"Chest")
         Chest,
@@ -154,7 +154,7 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
         LowerLimb,
         /// (122496007,SCT,"Lumbar spine")
         LumbarSpine,
-        /// (297173004,SCT,"Lumbo-sacral spine")
+        /// (1217253001,SCT,"Lumbo-sacral spine")
         LumboSacralSpine,
         /// (91609006,SCT,"Mandible")
         Mandible,
@@ -196,9 +196,9 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
         Patella,
         /// (816092008,SCT,"Pelvis")
         Pelvis,
-        /// (416631005,SCT,"Pelvis and lower extremities")
+        /// (1231522001,SCT,"Pelvis and lower extremities")
         PelvisAndLowerExtremities,
-        /// (113681,DCM,"Phantom")
+        /// (706342009,SCT,"Phantom")
         Phantom,
         /// (41216001,SCT,"Prostate")
         Prostate,
@@ -206,7 +206,7 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
         Rectum,
         /// (113197003,SCT,"Rib")
         Rib,
-        /// (297174005,SCT,"Sacro-coccygeal Spine")
+        /// (1217254007,SCT,"Sacro-coccygeal Spine")
         SacroCoccygealSpine,
         /// (39723000,SCT,"Sacroiliac joint")
         SacroiliacJoint,
@@ -242,7 +242,7 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
         Thigh,
         /// (122495006,SCT,"Thoracic spine")
         ThoracicSpine,
-        /// (297172009,SCT,"Thoraco-lumbar spine")
+        /// (1217256009,SCT,"Thoraco-lumbar spine")
         ThoracoLumbarSpine,
         /// (76505004,SCT,"Thumb")
         Thumb,
@@ -276,15 +276,15 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
      *                         for this context group, i.e. no checks are performed.
      *                         Call DSRContextGroup::checkSelectedValue() if needed.
      */
-    CID4031_CommonAnatomicRegions(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
+    CID4031_CommonAnatomicRegion(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
 
     /** constructor
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
      *                                current value
      ** @param  enhancedEncodingMode  set enhanced encoding mode for coded entry (if enabled)
      */
-    CID4031_CommonAnatomicRegions(const EnumType selectedValue,
-                                  const OFBool enhancedEncodingMode = OFFalse);
+    CID4031_CommonAnatomicRegion(const EnumType selectedValue,
+                                 const OFBool enhancedEncodingMode = OFFalse);
 
     /** select a coded entry given by its type as the current value
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
@@ -378,7 +378,7 @@ class DCMTK_CMR_EXPORT CID4031_CommonAnatomicRegions
  *-------------------*/
 
 // define short name for the context group class
-typedef CID4031_CommonAnatomicRegions CMR_CID4031;
+typedef CID4031_CommonAnatomicRegion CMR_CID4031;
 
 
 #endif

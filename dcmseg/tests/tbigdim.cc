@@ -20,10 +20,12 @@
  */
 
 #include "dcmtk/config/osconfig.h" /* make sure OS specific configuration is included first */
+#include "dcmtk/ofstd/oftest.h"
+#include "dcmtk/dcmseg/segtypes.h" /* for DCMSEG_DEBUG */
 
+#ifdef HAVE_STL_MAP
 #include "dcmtk/dcmseg/segdoc.h"
 #include "dcmtk/dcmseg/segment.h"
-#include "dcmtk/ofstd/oftest.h"
 
 #include "dcmtk/dcmfg/fgfracon.h"
 #include "dcmtk/dcmfg/fgpixmsr.h"
@@ -74,6 +76,8 @@ OFTEST_FLAGS(dcmseg_bigdim, EF_Slow)
     // Write to dataset and compare its dump with expected result
     DcmFileFormat dcmff;
     DcmDataset* ds = dcmff.getDataset();
+    seg->setCheckDimensionsOnWrite(OFFalse);
+    seg->setCheckFGOnWrite(OFFalse);
     OFCondition result = seg->writeDataset(*ds);
     OFCHECK(result.good());
 
@@ -291,3 +295,12 @@ static void checkCreatedObject(DcmDataset& dset)
         }
     }
 }
+#else
+
+// Dummy version of the test case. Needed to prevent ctest test failure.
+OFTEST(dcmseg_bigdim)
+{
+    DCMSEG_DEBUG("Will not run dcmseg_bigdim test: std::map support (HAVE_STL_MAP) must be defined to complete the test in acceptable time");
+}
+
+#endif // HAVE_STL_MAP

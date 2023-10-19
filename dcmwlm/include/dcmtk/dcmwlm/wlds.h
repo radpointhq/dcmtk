@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1996-2019, OFFIS e.V.
+ *  Copyright (C) 1996-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -118,7 +118,7 @@ class DCMTK_DCMWLM_EXPORT WlmDataSource
        *  contains a sequence attribute which contains no item or a single empty item, all
        *  attributes from that particular sequence are in fact queried and shall be returned
        *  by the SCP. This implementation accounts for this specification by inserting a
-       *  corresponding single item with all required attributes into such emtpy sequences.
+       *  corresponding single item with all required attributes into such empty sequences.
        *  This function performs the insertion of the required item and attributes.
        *  @param element Pointer to the currently processed element.
        */
@@ -216,6 +216,7 @@ class DCMTK_DCMWLM_EXPORT WlmDataSource
        *    DCM_AdditionalPatientHistory                          (0010,21b0)  LT  O  3  (from the Patient Medical Module)
        *    DCM_LastMenstrualDate                                 (0010,21d0)  DA  O  3  (from the Patient Medical Module)
        *    DCM_InstitutionAddress                                (0008,0081)  ST  O  3  (from the Visit Identification Module)
+       *    DCM_InstitutionalDepartmentName                       (0008,1040)  LO  O  3  (from the Visit Identification Module)
        *    DCM_OtherPatientNames                                 (0010,1001)  PN  O  3  (from the Patient Identification Module)
        *    DCM_PatientAddress                                    (0010,1040)  LO  O  3  (from the Patient Demographic Module)
        *    DCM_MilitaryRank                                      (0010,1080)  LO  O  3  (from the Patient Demographic Module)

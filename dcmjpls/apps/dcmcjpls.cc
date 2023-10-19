@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2007-2021, OFFIS e.V.
+ *  Copyright (C) 2007-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -100,8 +100,8 @@ LICENSE_FILE_DECLARATIONS
   cmd.setOptionColumns(LONGCOL, SHORTCOL);
   cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
-  cmd.addParam("dcmfile-in",  "DICOM input filename to be converted");
-  cmd.addParam("dcmfile-out", "DICOM output filename");
+  cmd.addParam("dcmfile-in",  "DICOM input filename to be converted\n(\"-\" for stdin)");
+  cmd.addParam("dcmfile-out", "DICOM output filename\n(\"-\" for stdout)");
 
   cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
     cmd.addOption("--help",                     "-h",     "print this help text and exit", OFCommandLine::AF_Exclusive);
@@ -442,7 +442,7 @@ LICENSE_FILE_EVALUATE_COMMAND_LINE_OPTIONS
       OFLOG_INFO(dcmcjplsLogger, "DICOM file is already compressed, converting to uncompressed transfer syntax first");
       if (EC_Normal != dataset->chooseRepresentation(EXS_LittleEndianExplicit, NULL))
       {
-        OFLOG_FATAL(dcmcjplsLogger, "No conversion from compressed original to uncompressed transfer syntax possible!");
+        OFLOG_FATAL(dcmcjplsLogger, "no conversion from compressed original to uncompressed transfer syntax possible");
         return 1;
       }
     }
@@ -458,7 +458,7 @@ LICENSE_FILE_EVALUATE_COMMAND_LINE_OPTIONS
         }
     }
 
-    OFLOG_INFO(dcmcjplsLogger, "Convert DICOM file to compressed transfer syntax");
+    OFLOG_INFO(dcmcjplsLogger, "converting DICOM file to compressed transfer syntax");
 
     //create representation parameter
     DJLSRepresentationParameter rp(OFstatic_cast(Uint16, opt_nearlossless_deviation), opt_useLosslessProcess);
@@ -473,9 +473,9 @@ LICENSE_FILE_EVALUATE_COMMAND_LINE_OPTIONS
     }
     if (dataset->canWriteXfer(opt_oxfer))
     {
-      OFLOG_INFO(dcmcjplsLogger, "Output transfer syntax " << opt_oxferSyn.getXferName() << " can be written");
+      OFLOG_INFO(dcmcjplsLogger, "output transfer syntax " << opt_oxferSyn.getXferName() << " can be written");
     } else {
-      OFLOG_FATAL(dcmcjplsLogger, "No conversion to transfer syntax " << opt_oxferSyn.getXferName() << " possible!");
+      OFLOG_FATAL(dcmcjplsLogger, "no conversion to transfer syntax " << opt_oxferSyn.getXferName() << " possible");
       return 1;
     }
 

@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2007-2021, OFFIS e.V.
+ *  Copyright (C) 2007-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -15,7 +15,7 @@
  *
  *  Author:  Marco Eichelberg
  *
- *  Purpose: Exctract PDF file from DICOM encapsulated PDF storage object
+ *  Purpose: Extract PDF file from DICOM encapsulated PDF storage object
  *
  */
 
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
   cmd.setOptionColumns(LONGCOL, SHORTCOL);
   cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
-  cmd.addParam("dcmfile-in",  "DICOM input filename");
+  cmd.addParam("dcmfile-in",  "DICOM input filename (\"-\" for stdin)");
   cmd.addParam("pdffile-out", "PDF output filename");
 
   cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
       cmd.addOption("--read-file",          "+f",     "read file format or data set (default)");
       cmd.addOption("--read-file-only",     "+fo",    "read file format only");
       cmd.addOption("--read-dataset",       "-f",     "read data set without file meta information");
-    cmd.addSubGroup("input transfer syntax:", LONGCOL, SHORTCOL);
+    cmd.addSubGroup("input transfer syntax:");
       cmd.addOption("--read-xfer-auto",     "-t=",    "use TS recognition (default)");
       cmd.addOption("--read-xfer-detect",   "-td",    "ignore TS specified in the file meta header");
       cmd.addOption("--read-xfer-little",   "-te",    "read with explicit VR little endian TS");

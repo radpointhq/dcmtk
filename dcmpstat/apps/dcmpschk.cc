@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2000-2021, OFFIS e.V.
+ *  Copyright (C) 2000-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -119,7 +119,7 @@ static void printResult(
         /* do not print if a DCM_Item as this is not
          * very helpful to distinguish instances.
          */
-        if (dobj != NULL && dobj->getTag().getXTag() != DCM_Item)
+        if (dobj != NULL && dobj->getTag() != DCM_Item)
         {
             char buf[128];
             sprintf(buf, "(%04x,%04x).",
@@ -382,10 +382,10 @@ static int checkelem(
        }
 
       /*
-      **  check, wether the value of the element is suitable to the data type.
+      **  check, whether the value of the element is suitable to the data type.
       */
 
-      /*** differenciate all value representations */
+      /*** differentiate all value representations */
        if (isaStringVR(vr))
        {
          char* value = NULL;
@@ -674,8 +674,7 @@ chkType1AttributeExistance(
     if (!dset->tagExistsWithValue(key)) {
         DcmTag t(key);
         OFLOG_WARN(dcmpschkLogger, MSGe_missingAtt << OFendl
-            << "   Affected attribute: " << t.getXTag()
-            << " " << t.getTagName() << OFendl);
+            << "   Affected attribute: " << t << " " << t.getTagName() << OFendl);
         found = OFFalse;
     }
     return found;
@@ -788,7 +787,7 @@ static int dcmchkMetaHeader(
         meta->findAndGetOFStringArray(tsuid, transferSyntaxUID);
         // is this transfer syntax known ?
         DcmXfer expected(transferSyntaxUID.c_str());
-        if (expected.getXfer() == EXS_Unknown) {
+        if (expected == EXS_Unknown) {
             OFLOG_WARN(dcmpschkLogger, MSGe_wrongAtt << OFendl
                 << "   Unknown Transfer Syntax" << OFendl
                 << "   Affected attribute: " << OFendl

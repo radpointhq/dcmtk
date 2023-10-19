@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1993-2021, OFFIS e.V.
+ *  Copyright (C) 1993-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -447,7 +447,7 @@ int DcmQueryRetrieveConfig::readHostTable(FILE *cnffp, int *lineno)
 {
    int  error = 0,        /* error flag */
         end = 0,          /* end flag */
-        noOfPeers;        /* number of peers for entry */
+        noOfPeers=0;      /* number of peers for entry */
    char rcline[512],      /* line in configuration file */
         mnemonic[512],    /* mnemonic in line */
         value[512],       /* parameter value */
@@ -600,8 +600,8 @@ int DcmQueryRetrieveConfig::readAETable(FILE *cnffp, int *lineno)
       CNF_Config.AEEntries[noOfAEEntries - 1].Peers = parsePeers(&lineptr, &CNF_Config.AEEntries[noOfAEEntries - 1].noOfPeers);
 
       // check the validity of the storage quota and peers values before continuing
-      if (CNF_Config.AEEntries[noOfAEEntries - 1].StorageQuota->maxStudies == 0 ||
-         CNF_Config.AEEntries[noOfAEEntries - 1].StorageQuota->maxBytesPerStudy == 0 || 
+      if (CNF_Config.AEEntries[noOfAEEntries - 1].StorageQuota->maxStudies <= 0 ||
+         CNF_Config.AEEntries[noOfAEEntries - 1].StorageQuota->maxBytesPerStudy <= 0 ||
          CNF_Config.AEEntries[noOfAEEntries - 1].noOfPeers == 0) {
           error = 1;
       }
@@ -618,22 +618,25 @@ int DcmQueryRetrieveConfig::readAETable(FILE *cnffp, int *lineno)
 
 DcmQueryRetrieveConfigQuota *DcmQueryRetrieveConfig::parseQuota(char **valuehandle)
 {
-   int  studies;
+   int  studies = 0;
    char *helpvalue,
         helpval[512];
    DcmQueryRetrieveConfigQuota *helpquota;
 
    if ((helpquota = (DcmQueryRetrieveConfigQuota *)malloc(sizeof(DcmQueryRetrieveConfigQuota))) == NULL)
       panic("Memory allocation 4");
+
+   helpquota->maxStudies = 0;
+   helpquota->maxBytesPerStudy = 0;
+
    helpvalue = parsevalues(valuehandle);
    if (helpvalue)
    {
-     sscanf(helpvalue, "%d , %s", &studies, helpval);
-     helpquota->maxStudies = studies;
-     helpquota->maxBytesPerStudy = quota(helpval);
-   } else {
-     helpquota->maxStudies = 0;
-     helpquota->maxBytesPerStudy = 0;
+     if (2 == sscanf(helpvalue, "%d , %s", &studies, helpval))
+     {
+       helpquota->maxStudies = studies;
+       helpquota->maxBytesPerStudy = quota(helpval);
+     }
    }
    free(helpvalue);
 
@@ -676,26 +679,34 @@ DcmQueryRetrieveConfigPeer *DcmQueryRetrieveConfig::readPeerList(char **valuehan
    while((helpvalue = parsevalues(valuehandle)) != NULL) {
       found = 0;
       if (strchr(helpvalue, ',') == NULL) {   /* symbolic name */
-         if (!CNF_HETable.noOfHostEntries) {
-            panic("No symbolic names defined");
-            *peers = 0;
-            free(helpvalue);
-            return((DcmQueryRetrieveConfigPeer *) 0);
-         }
-         for(i = 0; i < CNF_HETable.noOfHostEntries; i++) {
-            if (!strcmp(CNF_HETable.HostEntries[i].SymbolicName, helpvalue)) {
-               found = 1;
-               break;
-            }
-         }
-         if (!found) {
-            panic("Symbolic name \"%s\" not defined", helpvalue);
-            *peers = 0;
-            free(helpvalue);
-            return((DcmQueryRetrieveConfigPeer *) 0);
-         }
+        if (!CNF_HETable.noOfHostEntries) {
+           panic("No symbolic names defined");
+           *peers = 0;
+           free(helpvalue);
+           return((DcmQueryRetrieveConfigPeer *) 0);
+        }
+        for(i = 0; i < CNF_HETable.noOfHostEntries; i++) {
+           if ((CNF_HETable.HostEntries[i].SymbolicName != NULL) && (0 == strcmp(CNF_HETable.HostEntries[i].SymbolicName, helpvalue))) {
+              found = 1;
+              break;
+           }
+        }
+        if (!found) {
+           panic("Symbolic name \"%s\" not defined", helpvalue);
+           *peers = 0;
+           free(helpvalue);
+           return((DcmQueryRetrieveConfigPeer *) 0);
+        }
 
-         noOfPeers += CNF_HETable.HostEntries[i].noOfPeers;
+        if (CNF_HETable.HostEntries[i].noOfPeers <= 0) {
+           panic("No peers for symbolic name \"%s\" defined", helpvalue);
+           *peers = 0;
+           free(helpvalue);
+           return((DcmQueryRetrieveConfigPeer *) 0);
+        }
+
+        noOfPeers += CNF_HETable.HostEntries[i].noOfPeers;
+
         if ((helppeer = (DcmQueryRetrieveConfigPeer *)malloc(noOfPeers * sizeof(DcmQueryRetrieveConfigPeer))) == NULL)
             panic("Memory allocation 5 (%d)", noOfPeers);
         if (noOfPeers - CNF_HETable.HostEntries[i].noOfPeers) {
@@ -840,7 +851,7 @@ char *DcmQueryRetrieveConfig::parsevalues (char **valuehandle)
 }
 
 
-long DcmQueryRetrieveConfig::quota (const char *value)
+long DcmQueryRetrieveConfig::quota(const char *value)
 {
    int  number;
    long factor;
@@ -856,6 +867,9 @@ long DcmQueryRetrieveConfig::quota (const char *value)
    else return(-1L);
 
    number = atoi(value);
+
+   // check for underflow
+   if (number < 0) return (-1L);
 
    // check for overflow
    if (number > 0 && factor > LONG_MAX / number)

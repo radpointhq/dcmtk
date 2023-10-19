@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2007-2021, OFFIS e.V.
+ *  Copyright (C) 2007-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -462,10 +462,23 @@ OFCondition DJLSEncoderBase::losslessRawEncode(
       // an image that is not supported by either the raw or the cooked encoder.
       result = EC_JLSUnsupportedImageType;
     }
+  }
 
+  if (result.good())
+  {
     // make sure that all the descriptive attributes have sensible values
     if ((columns < 1)||(rows < 1)||(samplesPerPixel < 1)) result = EC_JLSUnsupportedImageType;
+  }
 
+  if (result.good())
+  {
+    // we do not support JPEG-LS compression of YBR_FULL_422 images
+    if (photometricInterpretation == "YBR_FULL_422")
+      result = EC_JLSUnsupportedImageType;
+  }
+
+  if (result.good())
+  {
     // make sure that we have at least as many bytes of pixel data as we expect
     if (bytesAllocated * samplesPerPixel * columns * rows *
       OFstatic_cast(unsigned long,numberOfFrames) > length)
@@ -719,7 +732,7 @@ OFCondition DJLSEncoderBase::compressRawFrame(
   if ((jls_params.ilv == ILV_NONE && (ilv == ILV_SAMPLE || ilv == ILV_LINE)) ||
       (ilv == ILV_NONE && (jls_params.ilv == ILV_SAMPLE || jls_params.ilv == ILV_LINE)))
   {
-    DCMJPLS_DEBUG("Converting image from " << (ilv == ILV_NONE ? "color-by-plane" : "color-by-pixel")
+    DCMJPLS_DEBUG("converting image from " << (ilv == ILV_NONE ? "color-by-plane" : "color-by-pixel")
           << " to " << (jls_params.ilv == ILV_NONE ? "color-by-plane" : "color-by-pixel"));
 
     frameBuffer = new Uint8[frameSize];
@@ -781,7 +794,7 @@ OFCondition DJLSEncoderBase::losslessCookedEncode(
   if (result.good()) result = dataset->findAndGetUint16(DCM_BitsAllocated, bitsAllocated);
   if (result.bad()) return result;
 
-  // The cooked encoder only handles the following photometic interpretations
+  // The cooked encoder only handles the following photometric interpretations
   if (photometricInterpretation != "MONOCHROME1" &&
       photometricInterpretation != "MONOCHROME2" &&
       photometricInterpretation != "RGB" &&
@@ -819,12 +832,12 @@ OFCondition DJLSEncoderBase::losslessCookedEncode(
 
   if (bitsStored > 16)
   {
-    DCMJPLS_WARN("Cannot compress image with " << bitsStored << " bits/sample: JPEG-LS supports max. 16 bits.");
+    DCMJPLS_WARN("cannot compress image with " << bitsStored << " bits/sample: JPEG-LS supports max. 16 bits");
     return EC_JLSUnsupportedBitDepth;
   }
   if (bitsStored < 2)
   {
-    DCMJPLS_WARN("Cannot compress image with " << bitsStored << " bit/sample: JPEG-LS requires at least 2 bits.");
+    DCMJPLS_WARN("cannot compress image with " << bitsStored << " bit/sample: JPEG-LS requires at least 2 bits");
     return EC_JLSUnsupportedBitDepth;
   }
 
@@ -1135,7 +1148,7 @@ OFCondition DJLSEncoderBase::compressCookedFrame(
   // Do we have to convert the image to color-by-plane now?
   if (jls_params.ilv == ILV_NONE && jls_params.components != 1)
   {
-    DCMJPLS_DEBUG("Converting image from color-by-pixel to color-by-plane");
+    DCMJPLS_DEBUG("converting image from color-by-pixel to color-by-plane");
 
     frameBuffer = new Uint8[buffer_size];
     framePointer = frameBuffer;

@@ -1,12 +1,12 @@
 /*
  *
- *  Copyright (C) 2015-2022, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2023, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  Header file with DICOM Controlled Terminology Code Definitions (Coding Scheme "DCM", Version "01")
  *
- *  Generated automatically from DICOM PS 3.16-2022a
- *  File created on 2022-01-26 13:19:00 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2023c
+ *  File created on 2023-07-14 12:40:27 by J. Riesmeier
  *
  */
 
@@ -34,8 +34,8 @@
  *  code definitions  *
  *--------------------*/
 
-// total number of codes: 4626
-// - retired: 201
+// total number of codes: 4706
+// - retired: 202
 // - no name: 27
 // - not unique: 17
 
@@ -130,6 +130,7 @@
 #define CODE_DCM_OphthalmicVisualField                                     DSRBasicCodedEntry("OPV", "DCM", "Ophthalmic Visual Field")
 #define CODE_DCM_OpticalSurfaceScanner                                     DSRBasicCodedEntry("OSS", "DCM", "Optical Surface Scanner")
 #define CODE_DCM_OtherModality                                             DSRBasicCodedEntry("OT", "DCM", "Other Modality")
+#define CODE_DCM_Photoacoustic                                             DSRBasicCodedEntry("PA", "DCM", "Photoacoustic")
 #define CODE_DCM_Plan                                                      DSRBasicCodedEntry("PLAN", "DCM", "Plan")
 #define CODE_DCM_PositionSensor                                            DSRBasicCodedEntry("POS", "DCM", "Position Sensor")
 #define CODE_DCM_PresentationState                                         DSRBasicCodedEntry("PR", "DCM", "Presentation State")
@@ -936,7 +937,7 @@
 #define CODE_DCM_VascularityPresentImmediatelyAdjacentToLesion             DSRBasicCodedEntry("111376", "DCM", "Vascularity present immediately adjacent to lesion")
 #define CODE_DCM_DiffuselyIncreasedVascularityInSurroundingTissue          DSRBasicCodedEntry("111377", "DCM", "Diffusely increased vascularity in surrounding tissue")
 #define CODE_DCM_CorrelationToOtherFindings                                DSRBasicCodedEntry("111380", "DCM", "Correlation to other Findings")
-#define CODE_DCM_CorrelatesToPhysicalExamFindings                          DSRBasicCodedEntry("111381", "DCM", "Correlates to physical exam findings")
+#define CODE_DCM_CorrelatesToPhysicalExaminationFindings                   DSRBasicCodedEntry("111381", "DCM", "Correlates to physical examination findings")
 #define CODE_DCM_CorrelatesToMammographyFindings                           DSRBasicCodedEntry("111382", "DCM", "Correlates to mammography findings")
 #define CODE_DCM_CorrelatesToMRIFindings                                   DSRBasicCodedEntry("111383", "DCM", "Correlates to MRI findings")
 #define CODE_DCM_CorrelatesToUltrasoundFindings                            DSRBasicCodedEntry("111384", "DCM", "Correlates to ultrasound findings")
@@ -974,11 +975,11 @@
 #define CODE_DCM_FollowUpAtShortIntervalFromPriorStudy                     DSRBasicCodedEntry("111416", "DCM", "Follow-up at short interval from prior study")
 #define CODE_DCM_HistoryOfBreastAugmentation_asymptomatic                  DSRBasicCodedEntry("111417", "DCM", "History of breast augmentation, asymptomatic")
 #define CODE_DCM_ReviewOfAnOutsideStudy                                    DSRBasicCodedEntry("111418", "DCM", "Review of an outside study")
-#define CODE_DCM_AdditionalEvaluationRequestedFromAbnormalScreeningExam    DSRBasicCodedEntry("111419", "DCM", "Additional evaluation requested from abnormal screening exam")
+#define CODE_DCM_AdditionalEvaluationRequestedFromAbnormalScreeningStudy   DSRBasicCodedEntry("111419", "DCM", "Additional evaluation requested from abnormal screening study")
 #define CODE_DCM_HistoryOfBenignBreastBiopsy                               DSRBasicCodedEntry("111420", "DCM", "History of benign breast biopsy")
 #define CODE_DCM_PersonalHistoryOfBreastCancerWithBreastConservationTherapy DSRBasicCodedEntry("111421", "DCM", "Personal history of breast cancer with breast conservation therapy")
 #define CODE_DCM_PhysicalExaminationResults                                DSRBasicCodedEntry("111423", "DCM", "Physical Examination Results")
-#define CODE_DCM_ComparisonToPreviousFindings                              DSRBasicCodedEntry("111424", "DCM", "Comparison to previous findings")
+#define CODE_DCM_ComparisonToPreviousStudies                               DSRBasicCodedEntry("111424", "DCM", "Comparison to previous studies")
 #define CODE_DCM_IntraluminalFillingDefect                                 DSRBasicCodedEntry("111425", "DCM", "Intraluminal filling defect")
 #define CODE_DCM_MultipleFillingDefect                                     DSRBasicCodedEntry("111426", "DCM", "Multiple filling defect")
 #define CODE_DCM_AbruptDuctTermination                                     DSRBasicCodedEntry("111427", "DCM", "Abrupt duct termination")
@@ -1937,7 +1938,7 @@
 #define CODE_DCM_OrthogonalLocationArcInnerMargin                          DSRBasicCodedEntry("113670", "DCM", "Orthogonal location arc inner margin")
 #define CODE_DCM_OrthogonalLocationArcOuterMargin                          DSRBasicCodedEntry("113671", "DCM", "Orthogonal location arc outer margin")
 #define CODE_DCM_QualityControlIntent                                      DSRBasicCodedEntry("113680", "DCM", "Quality Control Intent")
-#define CODE_DCM_Phantom                                                   DSRBasicCodedEntry("113681", "DCM", "Phantom")
+#define CODE_DCM_RETIRED_Phantom                                           DSRBasicCodedEntry("113681", "DCM", "Phantom")
 #define CODE_DCM_ACRAccreditationPhantom_CT                                DSRBasicCodedEntry("113682", "DCM", "ACR Accreditation Phantom - CT")
 #define CODE_DCM_ACRAccreditationPhantom_MR                                DSRBasicCodedEntry("113683", "DCM", "ACR Accreditation Phantom - MR")
 #define CODE_DCM_ACRAccreditationPhantom_Mammography                       DSRBasicCodedEntry("113684", "DCM", "ACR Accreditation Phantom - Mammography")
@@ -2147,6 +2148,7 @@
 #define CODE_DCM_FilteredBackProjection                                    DSRBasicCodedEntry("113962", "DCM", "Filtered Back Projection")
 #define CODE_DCM_IterativeReconstruction                                   DSRBasicCodedEntry("113963", "DCM", "Iterative Reconstruction")
 #define CODE_DCM_AtSurfaceOfPatient                                        DSRBasicCodedEntry("113964", "DCM", "At Surface of Patient")
+#define CODE_DCM_100cmFromXRaySource                                       DSRBasicCodedEntry("113965", "DCM", "100cm from X-Ray Source")
 #define CODE_DCM_ProcedureStepToThisPoint                                  DSRBasicCodedEntry("113970", "DCM", "Procedure Step To This Point")
 #define CODE_DCM_WaterEquivalentDiameter                                   DSRBasicCodedEntry("113980", "DCM", "Water Equivalent Diameter")
 #define CODE_DCM_WaterEquivalentDiameterRepresentativeValue                DSRBasicCodedEntry("113981", "DCM", "Water Equivalent Diameter Representative Value")
@@ -2643,8 +2645,8 @@
 #define CODE_DCM_LesionMorphology                                          DSRBasicCodedEntry("122133", "DCM", "Lesion Morphology")
 #define CODE_DCM_VesselMorphology                                          DSRBasicCodedEntry("122134", "DCM", "Vessel Morphology")
 #define CODE_DCM_CirculatorySupport                                        DSRBasicCodedEntry("122138", "DCM", "Circulatory Support")
-#define CODE_DCM_ReasonForExam                                             DSRBasicCodedEntry("122139", "DCM", "Reason for Exam")
-#define CODE_DCM_ComparisonWithPriorExamDone                               DSRBasicCodedEntry("122140", "DCM", "Comparison with Prior Exam Done")
+#define CODE_DCM_ReasonForStudy                                            DSRBasicCodedEntry("122139", "DCM", "Reason for Study")
+#define CODE_DCM_ComparisonWithPriorStudyDone                              DSRBasicCodedEntry("122140", "DCM", "Comparison with Prior Study Done")
 #define CODE_DCM_ElectrodePlacement                                        DSRBasicCodedEntry("122141", "DCM", "Electrode Placement")
 #define CODE_DCM_AcquisitionDeviceType                                     DSRBasicCodedEntry("122142", "DCM", "Acquisition Device Type")
 #define CODE_DCM_AcquisitionDeviceID                                       DSRBasicCodedEntry("122143", "DCM", "Acquisition Device ID")
@@ -3206,6 +3208,7 @@
 #define CODE_DCM_EndovaginalTransducer                                     DSRBasicCodedEntry("125263", "DCM", "Endovaginal Transducer")
 #define CODE_DCM_EndorectalTransducer                                      DSRBasicCodedEntry("125264", "DCM", "Endorectal Transducer")
 #define CODE_DCM_IntravascularTransducer                                   DSRBasicCodedEntry("125265", "DCM", "Intravascular Transducer")
+#define CODE_DCM_EndocavitaryTransducer                                    DSRBasicCodedEntry("125266", "DCM", "Endocavitary Transducer")
 #define CODE_DCM_LeftVentricleMassByAreaLength                             DSRBasicCodedEntry("125270", "DCM", "Left Ventricle Mass by Area Length")
 #define CODE_DCM_LeftVentricleMassByMMode_adjustedByHeight                 DSRBasicCodedEntry("125271", "DCM", "Left Ventricle Mass by M-mode - adjusted by Height")
 #define CODE_DCM_LeftVentricleMassByTruncatedEllipse_adjustedByHeight      DSRBasicCodedEntry("125272", "DCM", "Left Ventricle Mass by Truncated Ellipse - adjusted by Height")
@@ -3628,6 +3631,7 @@
 #define CODE_DCM_PlaneThroughCenter                                        DSRBasicCodedEntry("128130", "DCM", "Plane through Center")
 #define CODE_DCM_GeometricCenterpoint                                      DSRBasicCodedEntry("128137", "DCM", "Geometric Centerpoint")
 #define CODE_DCM_CenterOfMass                                              DSRBasicCodedEntry("128138", "DCM", "Center of Mass")
+#define CODE_DCM_SeedPoint                                                 DSRBasicCodedEntry("128139", "DCM", "Seed point")
 #define CODE_DCM_ImpairedRenalFunction                                     DSRBasicCodedEntry("128144", "DCM", "Impaired Renal Function")
 #define CODE_DCM_LaserCrossHairs                                           DSRBasicCodedEntry("128151", "DCM", "Laser Cross-hairs")
 #define CODE_DCM_AcquiredVolume                                            DSRBasicCodedEntry("128160", "DCM", "Acquired Volume")
@@ -3878,6 +3882,7 @@
 #define CODE_DCM_OSLD                                                      DSRBasicCodedEntry("128706", "DCM", "OSLD")
 #define CODE_DCM_IonChamber                                                DSRBasicCodedEntry("128707", "DCM", "Ion Chamber")
 #define CODE_DCM_DiamondDetector                                           DSRBasicCodedEntry("128708", "DCM", "Diamond Detector")
+#define CODE_DCM_RPLGD                                                     DSRBasicCodedEntry("128709", "DCM", "RPLGD")
 #define CODE_DCM_ForTeachingFileExport                                     DSRBasicCodedEntry("128710", "DCM", "For Teaching File Export")
 #define CODE_DCM_ForClinicalTrialExport                                    DSRBasicCodedEntry("128711", "DCM", "For Clinical Trial Export")
 #define CODE_DCM_AdditionalTeachingFileInformation                         DSRBasicCodedEntry("128712", "DCM", "Additional Teaching File Information")
@@ -4674,5 +4679,80 @@
 #define CODE_DCM_AccessoryClearanceInterlock                               DSRBasicCodedEntry("130742", "DCM", "Accessory Clearance Interlock")
 #define CODE_DCM_OutOfToleranceInterlock                                   DSRBasicCodedEntry("130743", "DCM", "Out of Tolerance Interlock")
 #define CODE_DCM_InterlockResolved                                         DSRBasicCodedEntry("130744", "DCM", "Interlock Resolved")
+#define CODE_DCM_CTDoseLengthProductSubTotal                               DSRBasicCodedEntry("130745", "DCM", "CT Dose Length Product Sub-Total")
+#define CODE_DCM_RTRegistrationMark                                        DSRBasicCodedEntry("130746", "DCM", "RT Registration Mark")
+#define CODE_DCM_IsodoseVolume                                             DSRBasicCodedEntry("130747", "DCM", "Isodose Volume")
+#define CODE_DCM_RadiotherapyDoseRegion                                    DSRBasicCodedEntry("130748", "DCM", "Radiotherapy Dose Region")
+#define CODE_DCM_QualityControlMaterialImage                               DSRBasicCodedEntry("130750", "DCM", "Quality control material image")
+#define CODE_DCM_TissueNotOfInterest                                       DSRBasicCodedEntry("130751", "DCM", "Tissue not of interest")
+#define CODE_DCM_DataNotAccessibleFromStorage                              DSRBasicCodedEntry("130752", "DCM", "Data Not Accessible from Storage")
+#define CODE_DCM_ProcessedKeyObjectSelection                               DSRBasicCodedEntry("130753", "DCM", "Processed Key Object Selection")
+#define CODE_DCM_ReplacedByAlternateRepresentation                         DSRBasicCodedEntry("130754", "DCM", "Replaced by Alternate Representation")
+#define CODE_DCM_ReferenceMeasurementGroup                                 DSRBasicCodedEntry("130755", "DCM", "Reference Measurement Group")
+#define CODE_DCM_ParticleDisplacementMethod                                DSRBasicCodedEntry("130756", "DCM", "Particle Displacement Method")
+#define CODE_DCM_ParticleVelocityMethod                                    DSRBasicCodedEntry("130757", "DCM", "Particle Velocity Method")
+#define CODE_DCM_ShearWaveDispersionSlopeCenterFrequency                   DSRBasicCodedEntry("130758", "DCM", "Shear Wave Dispersion Slope Center Frequency")
+#define CODE_DCM_ShearWaveDetectionMethod                                  DSRBasicCodedEntry("130759", "DCM", "Shear Wave Detection Method")
+#define CODE_DCM_ButterworthFilter                                         DSRBasicCodedEntry("130760", "DCM", "Butterworth filter")
+#define CODE_DCM_ChebyshevFilter                                           DSRBasicCodedEntry("130761", "DCM", "Chebyshev filter")
+#define CODE_DCM_EllipticFilter                                            DSRBasicCodedEntry("130762", "DCM", "Elliptic filter")
+#define CODE_DCM_BesselFilter                                              DSRBasicCodedEntry("130763", "DCM", "Bessel filter")
+#define CODE_DCM_GaussianFilter                                            DSRBasicCodedEntry("130764", "DCM", "Gaussian filter")
+#define CODE_DCM_KTypeFilter                                               DSRBasicCodedEntry("130765", "DCM", "K-type filter")
+#define CODE_DCM_MDerivedFilter                                            DSRBasicCodedEntry("130766", "DCM", "M-derived filter")
+#define CODE_DCM_DoubleMDerivedFilter                                      DSRBasicCodedEntry("130767", "DCM", "Double-m-derived filter")
+#define CODE_DCM_BodeFilter                                                DSRBasicCodedEntry("130768", "DCM", "Bode filter")
+#define CODE_DCM_ZobelFilter                                               DSRBasicCodedEntry("130769", "DCM", "Zobel filter")
+#define CODE_DCM_FIRFilter                                                 DSRBasicCodedEntry("130770", "DCM", "FIR filter")
+#define CODE_DCM_CICFilter                                                 DSRBasicCodedEntry("130771", "DCM", "CIC filter")
+#define CODE_DCM_IIRFilter                                                 DSRBasicCodedEntry("130772", "DCM", "IIR filter")
+#define CODE_DCM_BiquadFilter                                              DSRBasicCodedEntry("130773", "DCM", "Biquad filter")
+#define CODE_DCM_HzNormalized                                              DSRBasicCodedEntry("130774", "DCM", "Hz normalized")
+#define CODE_DCM_HzAngular                                                 DSRBasicCodedEntry("130775", "DCM", "Hz angular")
+#define CODE_DCM_MagnitudeNormalized                                       DSRBasicCodedEntry("130776", "DCM", "Magnitude normalized")
+#define CODE_DCM_SpecificObservationSubjectClass                           DSRBasicCodedEntry("130780", "DCM", "Specific observation subject class")
+#define CODE_DCM_ImageFrame                                                DSRBasicCodedEntry("130781", "DCM", "Image frame")
+#define CODE_DCM_RTPatientPositionAcquisition_IntegratedDoseMV             DSRBasicCodedEntry("130782", "DCM", "RT Patient Position Acquisition, Integrated Dose MV")
+#define CODE_DCM_RTPatientPositionAcquisition_FilmCassetteMV               DSRBasicCodedEntry("130783", "DCM", "RT Patient Position Acquisition, Film Cassette MV")
+#define CODE_DCM_RTPatientPositionAcquisition_FilmCassetteKV               DSRBasicCodedEntry("130784", "DCM", "RT Patient Position Acquisition, Film Cassette kV")
+#define CODE_DCM_RTPatientPositionAcquisition_ConeBeamCTKV                 DSRBasicCodedEntry("130785", "DCM", "RT Patient Position Acquisition, Cone-Beam CT kV")
+#define CODE_DCM_RTPatientPositionAcquisition_ConventionalCTKV             DSRBasicCodedEntry("130786", "DCM", "RT Patient Position Acquisition, Conventional CT kV")
+#define CODE_DCM_RTPatientPositionAcquisition_ConeBeamCTMV                 DSRBasicCodedEntry("130787", "DCM", "RT Patient Position Acquisition, Cone-Beam CT MV")
+#define CODE_DCM_RTPatientPositionAcquisition_ConventionalCTMV             DSRBasicCodedEntry("130788", "DCM", "RT Patient Position Acquisition, Conventional CT MV")
+#define CODE_DCM_NominalImagingSourceLocation                              DSRBasicCodedEntry("130789", "DCM", "Nominal Imaging Source Location")
+#define CODE_DCM_RTPatientPositioningReferenceImage                        DSRBasicCodedEntry("130790", "DCM", "RT Patient Positioning Reference Image")
+#define CODE_DCM_AcquisitionInitiationType                                 DSRBasicCodedEntry("130791", "DCM", "Acquisition Initiation Type")
+#define CODE_DCM_AcquisitionInitiationNotDefined                           DSRBasicCodedEntry("130792", "DCM", "Acquisition Initiation not defined")
+#define CODE_DCM_AcquisitionInitiationBeforeStartOfRadiation               DSRBasicCodedEntry("130793", "DCM", "Acquisition Initiation before start of Radiation")
+#define CODE_DCM_AcquisitionInitiationAfterEndOfRadiation                  DSRBasicCodedEntry("130794", "DCM", "Acquisition Initiation after end of Radiation")
+#define CODE_DCM_AcquisitionInitiationByTriggeringParameter                DSRBasicCodedEntry("130795", "DCM", "Acquisition Initiation by triggering parameter")
+#define CODE_DCM_IncrementalAcquisitionTriggering                          DSRBasicCodedEntry("130796", "DCM", "Incremental Acquisition Triggering")
+#define CODE_DCM_Meterset                                                  DSRBasicCodedEntry("130797", "DCM", "Meterset")
+#define CODE_DCM_SourceContinuousRollAngle                                 DSRBasicCodedEntry("130798", "DCM", "Source Continuous Roll Angle")
+#define CODE_DCM_TimeAfterStartOfRadiation                                 DSRBasicCodedEntry("130799", "DCM", "Time after start of Radiation")
+#define CODE_DCM_PercentageOfExpectedBeamonTimeOfRadiation                 DSRBasicCodedEntry("130800", "DCM", "Percentage of expected beam-on time of Radiation")
+#define CODE_DCM_IEC61217ImagingSourceToAxisDistance                       DSRBasicCodedEntry("130801", "DCM", "IEC61217 Imaging Source to Axis Distance")
+#define CODE_DCM_IEC61217XRayImageReceptorRadialDisplacementFromIsocenter  DSRBasicCodedEntry("130802", "DCM", "IEC61217 X-Ray Image Receptor Radial Displacement from Isocenter")
+#define CODE_DCM_IEC61217XRayImageReceptorLongitudinalDisplacement         DSRBasicCodedEntry("130803", "DCM", "IEC61217 X-Ray Image Receptor Longitudinal Displacement")
+#define CODE_DCM_IEC61217XRayImageReceptorLateralDisplacement              DSRBasicCodedEntry("130804", "DCM", "IEC61217 X-Ray Image Receptor Lateral Displacement")
+#define CODE_DCM_IEC61217XRayImageReceptorRotation                         DSRBasicCodedEntry("130805", "DCM", "IEC61217 X-Ray Image Receptor Rotation")
+#define CODE_DCM_ConfiguredLowestImagingEnergy                             DSRBasicCodedEntry("130806", "DCM", "Configured Lowest Imaging Energy")
+#define CODE_DCM_ConfiguredDefaultImagingEnergy                            DSRBasicCodedEntry("130807", "DCM", "Configured Default Imaging Energy")
+#define CODE_DCM_PlanarMatrixUltrasoundTransducerGeometry                  DSRBasicCodedEntry("130808", "DCM", "Planar matrix ultrasound transducer geometry")
+#define CODE_DCM_HemisphericalUltrasoundTransducerGeometry                 DSRBasicCodedEntry("130809", "DCM", "Hemispherical ultrasound transducer geometry")
+#define CODE_DCM_SingleSideIllumination                                    DSRBasicCodedEntry("130810", "DCM", "Single-side illumination")
+#define CODE_DCM_DualSideIllumination                                      DSRBasicCodedEntry("130811", "DCM", "Dual-side illumination")
+#define CODE_DCM_MultiSideIllumination                                     DSRBasicCodedEntry("130812", "DCM", "Multi-side illumination")
+#define CODE_DCM_ThroughTransducerIllumination                             DSRBasicCodedEntry("130813", "DCM", "Through-transducer illumination")
+#define CODE_DCM_InterstitialIllumination                                  DSRBasicCodedEntry("130814", "DCM", "Interstitial illumination")
+#define CODE_DCM_PiezocompositeTransducer                                  DSRBasicCodedEntry("130815", "DCM", "Piezocomposite Transducer")
+#define CODE_DCM_MEMSBasedTransducer                                       DSRBasicCodedEntry("130816", "DCM", "MEMS-based Transducer")
+#define CODE_DCM_InterferometricTransducer                                 DSRBasicCodedEntry("130817", "DCM", "Interferometric Transducer")
+#define CODE_DCM_UniformSpeedOfSoundCorrection                             DSRBasicCodedEntry("130818", "DCM", "Uniform Speed of Sound Correction")
+#define CODE_DCM_DualSpeedOfSoundCorrection                                DSRBasicCodedEntry("130819", "DCM", "Dual Speed of Sound Correction")
+#define CODE_DCM_SpeedOfSoundMapCorrection                                 DSRBasicCodedEntry("130820", "DCM", "Speed of Sound Map Correction")
+#define CODE_DCM_SphericalBackProjection                                   DSRBasicCodedEntry("130821", "DCM", "Spherical Back Projection")
+#define CODE_DCM_NumericalAcousticModel                                    DSRBasicCodedEntry("130822", "DCM", "Numerical Acoustic Model")
+#define CODE_DCM_BloodDeoxygenationLevel                                   DSRBasicCodedEntry("130823", "DCM", "Blood Deoxygenation Level")
 
 #endif

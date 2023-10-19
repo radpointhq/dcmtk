@@ -1,12 +1,12 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2023, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
- *  Header file for class CID11_RouteOfAdministration
+ *  Header file for class CID11_AdministrationRoute
  *
- *  Generated automatically from DICOM PS 3.16-2021d
- *  File created on 2021-09-13 09:26:28 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2023a
+ *  File created on 2023-02-02 17:56:42 by J. Riesmeier
  *
  */
 
@@ -27,16 +27,16 @@
  *---------------------*/
 
 /** Implementation of DCMR Context Group:
- *  CID 11 - Route of Administration.
+ *  CID 11 - Administration Route.
  *  (type: extensible, version: 20200117)
  */
-class DCMTK_CMR_EXPORT CID11_RouteOfAdministration
+class DCMTK_CMR_EXPORT CID11_AdministrationRoute
   : public DSRContextGroup
 {
 
   public:
 
-    /** types of route of administration
+    /** types of administration route
      */
     enum EnumType
     {
@@ -100,15 +100,15 @@ class DCMTK_CMR_EXPORT CID11_RouteOfAdministration
      *                         for this context group, i.e. no checks are performed.
      *                         Call DSRContextGroup::checkSelectedValue() if needed.
      */
-    CID11_RouteOfAdministration(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
+    CID11_AdministrationRoute(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
 
     /** constructor
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
      *                                current value
      ** @param  enhancedEncodingMode  set enhanced encoding mode for coded entry (if enabled)
      */
-    CID11_RouteOfAdministration(const EnumType selectedValue,
-                                const OFBool enhancedEncodingMode = OFFalse);
+    CID11_AdministrationRoute(const EnumType selectedValue,
+                              const OFBool enhancedEncodingMode = OFFalse);
 
     /** select a coded entry given by its type as the current value
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
@@ -202,7 +202,7 @@ class DCMTK_CMR_EXPORT CID11_RouteOfAdministration
  *-------------------*/
 
 // define short name for the context group class
-typedef CID11_RouteOfAdministration CMR_CID11;
+typedef CID11_AdministrationRoute CMR_CID11;
 
 
 #endif

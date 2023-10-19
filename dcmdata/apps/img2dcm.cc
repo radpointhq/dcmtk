@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2007-2022, OFFIS e.V.
+ *  Copyright (C) 2007-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -33,7 +33,7 @@
 #include "dcmtk/dcmdata/libi2d/i2dplvlp.h"
 #include "dcmtk/dcmdata/libi2d/i2dplnsc.h"
 #include "dcmtk/dcmdata/libi2d/i2dplop.h"
-#include "dcmtk/dcmdata/xml2dcm.h"
+#include "dcmtk/dcmdata/dcmxml/xml2dcm.h"
 
 #define OFFIS_CONSOLE_APPLICATION "img2dcm"
 static char rcsid[] = "$dcmtk: " OFFIS_CONSOLE_APPLICATION " v" OFFIS_DCMTK_VERSION " " OFFIS_DCMTK_RELEASEDATE " $";
@@ -92,6 +92,7 @@ static OFCondition evaluateFromFileOptions(
   }
 #endif
 
+  cmd.beginOptionBlock();
   if (cmd.findOption("--study-from"))
   {
     OFString tempStr;
@@ -111,6 +112,7 @@ static OFCondition evaluateFromFileOptions(
       return makeOFCondition(OFM_dcmdata, 18, OF_error, "Unable to read value of --series-from option");
     converter.setSeriesFrom(tempStr);
   }
+  cmd.endOptionBlock();
 
   if (cmd.findOption("--instance-inc"))
     converter.setIncrementInstanceNumber(OFTrue);
@@ -123,7 +125,7 @@ static OFCondition evaluateFromFileOptions(
 static void addCmdLineOptions(OFCommandLine& cmd)
 {
   cmd.addParam("imgfile-in",  "image input filename", OFCmdParam::PM_MultiMandatory);
-  cmd.addParam("dcmfile-out", "DICOM output filename");
+  cmd.addParam("dcmfile-out", "DICOM output filename (\"-\" for stdout)");
 
   cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
     cmd.addOption("--help",                  "-h",      "print this help text and exit", OFCommandLine::AF_Exclusive);
@@ -132,7 +134,8 @@ static void addCmdLineOptions(OFCommandLine& cmd)
 
   cmd.addGroup("input options:", LONGCOL, SHORTCOL + 2);
     cmd.addSubGroup("general:");
-      cmd.addOption("--input-format",        "-i",   1, "[i]nput file format: string", "supported formats: JPEG (default), BMP");
+      cmd.addOption("--input-format",        "-i",   1, "[i]nput file format: string",
+                                                        "supported formats: JPEG (default), BMP");
       cmd.addOption("--dataset-from",        "-df",  1, "[f]ilename: string",
                                                         "use dataset from DICOM file f");
 #ifdef WITH_LIBXML

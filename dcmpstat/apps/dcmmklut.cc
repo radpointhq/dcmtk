@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1998-2021, OFFIS e.V.
+ *  Copyright (C) 1998-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -575,7 +575,7 @@ static OFCondition createLUT(const unsigned int numberOfBits,
     unsigned long wordsToWrite = 0;
     if (byteAlign)
     {
-        // the array is now in little endian byte order. Swap to local byte order if neccessary.
+        // the array is now in little endian byte order. Swap to local byte order if necessary.
         swapIfNecessary(gLocalByteOrder, EBO_LittleEndian, (Uint8 *)data, numberOfEntries + 1, sizeof(Uint16));
         wordsToWrite = (numberOfEntries + 1) / 2;
     } else
@@ -674,7 +674,7 @@ int main(int argc, char *argv[])
     cmd.setOptionColumns(LONGCOL, SHORTCOL);
     cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
-    cmd.addParam("dcmimg-out",                   "DICOM output filename");
+    cmd.addParam("dcmimg-out",                   "DICOM output filename (\"-\" for stdout)");
 
     cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
      cmd.addOption("--help",           "-h",     "print this help text and exit", OFCommandLine::AF_Exclusive);

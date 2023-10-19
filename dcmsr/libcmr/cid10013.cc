@@ -1,12 +1,12 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2023, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  Source file for class CID10013_CTAcquisitionType
  *
- *  Generated automatically from DICOM PS 3.16-2021d
- *  File created on 2021-09-13 09:26:40 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2023a
+ *  File created on 2023-02-02 17:57:00 by J. Riesmeier
  *
  */
 

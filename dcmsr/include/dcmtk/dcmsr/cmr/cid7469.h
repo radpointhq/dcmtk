@@ -1,12 +1,12 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2023, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
- *  Header file for class CID7469_GenericIntensityAndSizeMeasurements
+ *  Header file for class CID7469_GenericIntensityAndSizeMeasurement
  *
- *  Generated automatically from DICOM PS 3.16-2021d
- *  File created on 2021-09-13 09:26:40 by J. Riesmeier
+ *  Generated automatically from DICOM PS 3.16-2023a
+ *  File created on 2023-02-02 17:56:58 by J. Riesmeier
  *
  */
 
@@ -27,16 +27,16 @@
  *---------------------*/
 
 /** Implementation of DCMR Context Group:
- *  CID 7469 - Generic Intensity and Size Measurements.
+ *  CID 7469 - Generic Intensity and Size Measurement.
  *  (type: extensible, version: 20141110)
  */
-class DCMTK_CMR_EXPORT CID7469_GenericIntensityAndSizeMeasurements
+class DCMTK_CMR_EXPORT CID7469_GenericIntensityAndSizeMeasurement
   : public DSRContextGroup
 {
 
   public:
 
-    /** types of generic intensity and size measurements
+    /** types of generic intensity and size measurement
      */
     enum EnumType
     {
@@ -430,15 +430,15 @@ class DCMTK_CMR_EXPORT CID7469_GenericIntensityAndSizeMeasurements
      *                         for this context group, i.e. no checks are performed.
      *                         Call DSRContextGroup::checkSelectedValue() if needed.
      */
-    CID7469_GenericIntensityAndSizeMeasurements(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
+    CID7469_GenericIntensityAndSizeMeasurement(const DSRCodedEntryValue &selectedValue = DSRCodedEntryValue());
 
     /** constructor
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
      *                                current value
      ** @param  enhancedEncodingMode  set enhanced encoding mode for coded entry (if enabled)
      */
-    CID7469_GenericIntensityAndSizeMeasurements(const EnumType selectedValue,
-                                                const OFBool enhancedEncodingMode = OFFalse);
+    CID7469_GenericIntensityAndSizeMeasurement(const EnumType selectedValue,
+                                               const OFBool enhancedEncodingMode = OFFalse);
 
     /** select a coded entry given by its type as the current value
      ** @param  selectedValue         type mapped to a coded entry that is selected as the
@@ -532,7 +532,7 @@ class DCMTK_CMR_EXPORT CID7469_GenericIntensityAndSizeMeasurements
  *-------------------*/
 
 // define short name for the context group class
-typedef CID7469_GenericIntensityAndSizeMeasurements CMR_CID7469;
+typedef CID7469_GenericIntensityAndSizeMeasurement CMR_CID7469;
 
 
 #endif

@@ -13,6 +13,7 @@ DCMTK_ADD_LIBRARY(ofstd
   offile.cc
   offilsys.cc
   offname.cc
+  ofipc.cc
   oflist.cc
   ofstd.cc
   ofstring.cc
@@ -29,3 +30,4 @@ DCMTK_ADD_LIBRARY(ofstd
 )
 
 DCMTK_TARGET_LINK_LIBRARIES(ofstd config ${CHARSET_CONVERSION_LIBS} ${SOCKET_LIBS} ${THREAD_LIBS} ${WIN32_STD_LIBRARIES})
+DCMTK_TARGET_LINK_MODULES(ofstd oficonv)

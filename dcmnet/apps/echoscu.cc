@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1994-2021, OFFIS e.V.
+ *  Copyright (C) 1994-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -101,7 +101,14 @@ static const char* transferSyntaxes[] = {
       UID_MPEG4HighProfileLevel4_2_For3DVideoTransferSyntax,
       UID_MPEG4StereoHighProfileLevel4_2TransferSyntax,
       UID_HEVCMainProfileLevel5_1TransferSyntax,
-      UID_HEVCMain10ProfileLevel5_1TransferSyntax
+      UID_HEVCMain10ProfileLevel5_1TransferSyntax,
+      UID_FragmentableMPEG2MainProfileMainLevelTransferSyntax,
+      UID_FragmentableMPEG2MainProfileHighLevelTransferSyntax,
+      UID_FragmentableMPEG4HighProfileLevel4_1TransferSyntax,
+      UID_FragmentableMPEG4BDcompatibleHighProfileLevel4_1TransferSyntax,
+      UID_FragmentableMPEG4HighProfileLevel4_2_For2DVideoTransferSyntax,
+      UID_FragmentableMPEG4HighProfileLevel4_2_For3DVideoTransferSyntax,
+      UID_FragmentableMPEG4StereoHighProfileLevel4_2TransferSyntax
 };
 
 // ********************************************
@@ -304,7 +311,7 @@ main(int argc, char *argv[])
     }
 
     /* initialize association parameters, i.e. create an instance of T_ASC_Parameters*. */
-    cond = ASC_createAssociationParameters(&params, opt_maxReceivePDULength);
+    cond = ASC_createAssociationParameters(&params, opt_maxReceivePDULength, dcmConnectionTimeout.get());
     if (cond.bad()) {
         OFLOG_FATAL(echoscuLogger, DimseCondition::dump(temp_str, cond));
         exit(1);
@@ -374,8 +381,8 @@ main(int argc, char *argv[])
     int presentationContextID = 1; /* odd byte value 1, 3, 5, .. 255 */
     for (unsigned long ii=0; ii<opt_numPresentationCtx; ii++)
     {
-        cond = ASC_addPresentationContext(params, OFstatic_cast(T_ASC_PresentationContextID, presentationContextID), 
-                 UID_VerificationSOPClass, transferSyntaxes, OFstatic_cast(int, opt_numXferSyntaxes));
+        cond = ASC_addPresentationContext(params, OFstatic_cast(T_ASC_PresentationContextID, presentationContextID),
+            UID_VerificationSOPClass, transferSyntaxes, OFstatic_cast(int, opt_numXferSyntaxes));
         presentationContextID += 2;
         if (cond.bad())
         {

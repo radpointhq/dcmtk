@@ -70,11 +70,11 @@ association negotiation profile from configuration file:
 
 application entity title:
 
-  -aet  --aetitle  [a]etitle: string
-          set my AE title (default: DCMRECV)
-
   -uca  --use-called-aetitle
-          always respond with called AE title
+          always respond with called AE title (default)
+
+  -aet  --aetitle  [a]etitle: string
+          set my AE title and check called AE title
 
 other network options:
 
@@ -139,17 +139,28 @@ certification authority:
 
 security profile:
 
+  +pg   --profile-8996
+          BCP 195 RFC 8996 TLS Profile (default)
+
+  +pm   --profile-8996-mod
+          Modified BCP 195 RFC 8996 TLS Profile
+
+          # only available if underlying TLS library supports
+          # all TLS features required for this profile
+
   +py   --profile-bcp195-nd
-          Non-downgrading BCP 195 TLS Profile (default)
+          Non-downgrading BCP 195 TLS Profile (retired)
 
   +px   --profile-bcp195
-          BCP 195 TLS Profile
+          BCP 195 TLS Profile (retired)
 
   +pz   --profile-bcp195-ex
-          Extended BCP 195 TLS Profile
+          Extended BCP 195 TLS Profile (retired)
 
   +pb   --profile-basic
           Basic TLS Secure Transport Connection Profile (retired)
+
+          # only available if underlying TLS library supports 3DES
 
   +pa   --profile-aes
           AES TLS Secure Transport Connection Profile (retired)
@@ -168,6 +179,14 @@ ciphersuite:
 
   +dp   --dhparam  [f]ilename: string
           read DH parameters for DH/DSS ciphersuites
+
+server name indication:
+
+        --no-sni
+          do not use SNI (default)
+
+        --expect-sni  [s]erver name: string
+          expect requests for server name s
 
 pseudo random generator:
 
@@ -277,7 +296,7 @@ and semantics of this configuration file are documented in \e asconfig.txt.
 
 By default, that means if no association negotiation profile is loaded,
 \b dcmrecv only supports the Verification SOP Class as an SCP (with default
-transfer syntax, i.e. Implicit VR Litte Endian).
+transfer syntax, i.e. Implicit VR Little Endian).
 
 In the future, there might be additional options that allow for specifying the
 list of supported Presentation Contexts (i.e. combination of SOP Class and
@@ -458,6 +477,6 @@ It is an error if no data dictionary can be loaded.
 
 \section dcmrecv_copyright COPYRIGHT
 
-Copyright (C) 2013-2021 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
+Copyright (C) 2013-2023 by OFFIS e.V., Escherweg 2, 26121 Oldenburg, Germany.
 
 */

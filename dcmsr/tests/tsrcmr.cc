@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2015-2021, J. Riesmeier, Oldenburg, Germany
+ *  Copyright (C) 2015-2022, J. Riesmeier, Oldenburg, Germany
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation are maintained by
@@ -44,6 +44,7 @@
 #include "dcmtk/dcmsr/cmr/cid4031e.h"
 #include "dcmtk/dcmsr/cmr/cid7181.h"
 #include "dcmtk/dcmsr/cmr/cid7445.h"
+#include "dcmtk/dcmsr/cmr/cid7551.h"
 #include "dcmtk/dcmsr/cmr/cid10013e.h"
 #include "dcmtk/dcmsr/cmr/cid10033e.h"
 #include "dcmtk/dcmsr/cmr/tid1001.h"
@@ -99,9 +100,9 @@ OFTEST(dcmsr_CID244e_Laterality)
 }
 
 
-OFTEST(dcmsr_CID4031e_CommonAnatomicRegions)
+OFTEST(dcmsr_CID4031e_CommonAnatomicRegion)
 {
-    CID4031e_CommonAnatomicRegions ctxGroup("HEART");
+    CID4031e_CommonAnatomicRegion ctxGroup("HEART");
     DSRCodedEntryValue codedEntry = ctxGroup;
     OFCHECK(ctxGroup.hasSelectedValue());
     OFCHECK(ctxGroup.getSelectedValue() == codedEntry);
@@ -115,9 +116,9 @@ OFTEST(dcmsr_CID4031e_CommonAnatomicRegions)
 }
 
 
-OFTEST(dcmsr_CID7445_DeviceParticipatingRoles)
+OFTEST(dcmsr_CID7445_DeviceParticipatingRole)
 {
-    CID7445_DeviceParticipatingRoles ctxGroup1;
+    CID7445_DeviceParticipatingRole ctxGroup1;
     OFCHECK(!ctxGroup1.hasSelectedValue());
     OFCHECK(!ctxGroup1.hasCodedEntry(DSRBasicCodedEntry("0815", "99TEST", "Some test code")));
     OFCHECK(!ctxGroup1.hasExtendedCodedEntries());
@@ -128,7 +129,7 @@ OFTEST(dcmsr_CID7445_DeviceParticipatingRoles)
     OFCHECK(ctxGroup1.findCodedEntry(DSRBasicCodedEntry("0815", "99TEST", "Some test code")) == SR_EC_CodedEntryIsExtensionOfContextGroup);
     OFCHECK(ctxGroup1.hasExtendedCodedEntries());
     /* try again with a non-extensible context group */
-    CID7445_DeviceParticipatingRoles ctxGroup2(DSRBasicCodedEntry("4711", "99TEST", "Some other test code"));
+    CID7445_DeviceParticipatingRole ctxGroup2(DSRBasicCodedEntry("4711", "99TEST", "Some other test code"));
     ctxGroup2.setExtensible(OFFalse);
     OFCHECK(ctxGroup2.hasSelectedValue());
     OFCHECK(ctxGroup2.addCodedEntry(DSRBasicCodedEntry("4711", "99TEST", "Some other test code")).bad());
@@ -169,7 +170,7 @@ OFTEST(dcmsr_CID10033e_CTReconstructionAlgorithm)
 OFTEST(dcmsr_TID1001_ObservationContext)
 {
     TID1001_ObservationContext obsContext;
-    OFList<CID7445_DeviceParticipatingRoles> procRoles;
+    OFList<CID7445_DeviceParticipatingRole> procRoles;
     procRoles.push_back(CMR_CID7445::IrradiatingDevice);
     procRoles.push_back(CMR_CID7445::Recording);
     /* check template identification */
@@ -212,11 +213,11 @@ OFTEST(dcmsr_TID1204_LanguageOfContentItemAndDescendants)
     /* empty template is not valid */
     OFCHECK(!lang.isValid());
     /* add language */
-    OFCHECK(lang.setLanguage(CID5000_Languages::German_DE).good());
+    OFCHECK(lang.setLanguage(CID5000_Language::German_DE).good());
     OFCHECK(lang.isValid());
     OFCHECK_EQUAL(lang.countNodes(), 1);
     /* add language and separate country */
-    OFCHECK(lang.setLanguage(CID5000_Languages::German, CID5001_Countries::Germany).good());
+    OFCHECK(lang.setLanguage(CID5000_Language::German, CID5001_Country::Germany).good());
     OFCHECK(lang.isValid());
     OFCHECK_EQUAL(lang.countNodes(), 2);
 }
@@ -293,7 +294,7 @@ OFTEST(dcmsr_TID1500_MeasurementReport)
     OFCHECK(report.getDocumentTitle(title).good());
     OFCHECK(title == CODE_DCM_PETMeasurementReport);
     /* set the language */
-    OFCHECK(report.setLanguage(CID5000_Languages::English).good());
+    OFCHECK(report.setLanguage(CID5000_Language::English).good());
     /* set details on the observation context */
     OFCHECK(report.getObservationContext().addPersonObserver("Doe^Jane", "Some Organization").good());
     /* create new image library (only needed after clear) */
@@ -515,10 +516,10 @@ OFTEST(dcmsr_TID1501_MeasurementGroup)
     OFCHECK(measurement.addFindingSite(DSRBasicCodedEntry("EFGH.2", "99TEST", "Finding Site 2"), CID244e_Laterality(), DSRBasicCodedEntry("EFGH.2-1", "99TEST", "Finding Site 2 Modifier")).good());
     OFCHECK(measurement.setEquivalentMeaningOfConceptName("blabla").good());
     OFCHECK(measurement.addDerivationParameter(CODE_DCM_Derivation, CMR_SRNumericMeasurementValue("1.5", CODE_UCUM_Centimeter)).good());
-    OFCHECK(measurement.addImage(CODE_DCM_SourceImageForImageProcessingOperation, DSRImageReferenceValue(UID_CTImageStorage, "1.2.3.4")).good());
+    OFCHECK(measurement.addImage(DSRCodedEntryValue(CODE_DCM_SourceImageForImageProcessingOperation), DSRImageReferenceValue(UID_CTImageStorage, "1.2.3.4")).good());
     DSRSpatialCoordinatesValue spatialCoord(DSRTypes::GT_Point);
     spatialCoord.getGraphicDataList().addItem(100, 200);
-    OFCHECK(measurement.addSpatialCoordinates(CODE_DCM_SourceImageForImageProcessingOperation, spatialCoord, DSRImageReferenceValue(UID_CTImageStorage, "1.2.3.4")).good());
+    OFCHECK(measurement.addSpatialCoordinates(CMR_CID7551::ApproximateSpatialLocation, spatialCoord, DSRImageReferenceValue(UID_CTImageStorage, "1.2.3.4")).good());
     OFCHECK(group.addQualitativeEvaluation(CODE_DCM_Conclusion, "it's ok").good());
     OFCHECK_EQUAL(group.countNodes(OFTrue /*searchIntoSubTemplates*/), 21);
     /* add extra content items (TID 1501 is extensible) */

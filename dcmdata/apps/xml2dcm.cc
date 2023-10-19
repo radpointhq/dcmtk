@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2003-2021, OFFIS e.V.
+ *  Copyright (C) 2003-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -28,7 +28,7 @@
 #include "dcmtk/ofstd/ofstd.h"
 #include "dcmtk/ofstd/ofconapp.h"
 #include "dcmtk/dcmdata/dcostrmz.h"   /* for dcmZlibCompressionLevel */
-#include "dcmtk/dcmdata/xml2dcm.h"
+#include "dcmtk/dcmdata/dcmxml/xml2dcm.h"
 
 #ifdef WITH_ZLIB
 #include <zlib.h>                     /* for zlibVersion() */
@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
     cmd.setOptionColumns(LONGCOL, SHORTCOL);
     cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
-    cmd.addParam("xmlfile-in",  "XML input filename to be converted (stdin: \"-\")", OFCmdParam::PM_Mandatory);
-    cmd.addParam("dcmfile-out", "DICOM output filename", OFCmdParam::PM_Mandatory);
+    cmd.addParam("xmlfile-in",  "XML input filename to be converted\n(\"-\" for stdin)", OFCmdParam::PM_Mandatory);
+    cmd.addParam("dcmfile-out", "DICOM output filename\n(\"-\" for stdout)", OFCmdParam::PM_Mandatory);
 
     cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
       cmd.addOption("--help",                  "-h",     "print this help text and exit", OFCommandLine::AF_Exclusive);

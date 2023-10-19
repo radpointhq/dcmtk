@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1996-2020, OFFIS e.V.
+ *  Copyright (C) 1996-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -315,7 +315,7 @@ void WlmFileSystemInteractionManager::GetAttributeValueForMatchingRecord( DcmTag
 //                numOfSuperiorSequences - [in] The number of elements in the above array.
 //                idx                    - [in] Identifies the record from which the attribute value shall be retrieved.
 //                value                  - [out] Pointer to a newly created string that contains the requested value.
-//                                               If value was not found an emtpy string will be returned.
+//                                               If value was not found an empty string will be returned.
 // Return Value : none.
 {
   OFCondition cond;
@@ -436,13 +436,13 @@ OFBool WlmFileSystemInteractionManager::DatasetIsComplete( DcmDataset *dataset )
 //                   > ScheduledProcedureStepStartTime    (0040,0003)        1
 //                   > Modality                           (0008,0060)        1
 //                   > ScheduledProcedureStepDescription  (0040,0007)        1C (The ScheduledProcedureStepDescription (0040,0007) or the ScheduledProtocolCodeSequence (0040,0008) or both shall be supported by the SCP; we actually support both, so we have to check if at least one of the two attributes contains valid information.)
-//                   > ScheduledProtocolCodeSequence      (0040,0008)        1C (see abobve)
+//                   > ScheduledProtocolCodeSequence      (0040,0008)        1C (see above)
 //                   > > CodeValue                        (0008,0100)        1
 //                   > > CodingSchemeDesignator           (0008,0102)        1
 //                   > ScheduledProcedureStepID           (0040,0009)        1
 //                  RequestedProcedureID                  (0040,1001)        1
 //                  RequestedProcedureDescription         (0032,1060)        1C (The RequestedProcedureDescription (0032,1060) or the RequestedProcedureCodeSequence (0032,1064) or both shall be supported by the SCP; we actually support both, so we have to check if at least one of the two attributes contains valid information.)
-//                  RequestedProcedureCodeSequence        (0032,1064)        1C (see abobve)
+//                  RequestedProcedureCodeSequence        (0032,1064)        1C (see above)
 //                   > > CodeValue                        (0008,0100)        1
 //                   > > CodingSchemeDesignator           (0008,0102)        1
 //                  StudyInstanceUID                      (0020,000D)        1
@@ -460,7 +460,7 @@ OFBool WlmFileSystemInteractionManager::DatasetIsComplete( DcmDataset *dataset )
 {
   DcmElement *scheduledProcedureStepSequence = NULL;
 
-  // intialize returnValue
+  // initialize returnValue
   OFBool complete = OFTrue;
 
   DCMWLM_DEBUG("Checking whether dataset is complete ...");

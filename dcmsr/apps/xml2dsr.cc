@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 2003-2019, OFFIS e.V.
+ *  Copyright (C) 2003-2022, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
     cmd.setOptionColumns(LONGCOL, SHORTCOL);
     cmd.setParamColumn(LONGCOL + SHORTCOL + 4);
 
-    cmd.addParam("xmlfile-in",   "XML input filename to be converted (stdin: \"-\")", OFCmdParam::PM_Mandatory);
-    cmd.addParam("dsrfile-out",  "DICOM SR output filename", OFCmdParam::PM_Mandatory);
+    cmd.addParam("xmlfile-in",   "XML input filename to be converted\n(\"-\" for stdin)", OFCmdParam::PM_Mandatory);
+    cmd.addParam("dsrfile-out",  "DICOM SR output filename\n(\"-\" for stdout)", OFCmdParam::PM_Mandatory);
 
     cmd.addGroup("general options:", LONGCOL, SHORTCOL + 2);
       cmd.addOption("--help",                  "-h",     "print this help text and exit", OFCommandLine::AF_Exclusive);
@@ -324,56 +324,52 @@ int main(int argc, char *argv[])
     if (result.good())
     {
         /* create new SR document */
-        DSRDocument *dsrdoc = new DSRDocument();
-        if (dsrdoc != NULL)
-        {
-            DcmFileFormat fileformat;
+        DcmFileFormat fileformat;
+        DSRDocument dsrdoc;
 #ifdef LIBXML_SCHEMAS_ENABLED
-            if (opt_readFlags & DSRTypes::XF_validateSchema)
-                OFLOG_INFO(xml2dsrLogger, "reading and validating XML input file: " << opt_ifname);
-            else
+        if (opt_readFlags & DSRTypes::XF_validateSchema)
+            OFLOG_INFO(xml2dsrLogger, "reading and validating XML input file: " << opt_ifname);
+        else
 #endif
-                OFLOG_INFO(xml2dsrLogger, "reading XML input file: " << opt_ifname);
-            /* read XML file and feed data into DICOM fileformat */
-            result = dsrdoc->readXML(opt_ifname, opt_readFlags);
+            OFLOG_INFO(xml2dsrLogger, "reading XML input file: " << opt_ifname);
+        /* read XML file and feed data into DICOM fileformat */
+        result = dsrdoc.readXML(opt_ifname, opt_readFlags);
+        if (result.good())
+        {
+            DcmDataset *dataset = fileformat.getDataset();
+            OFLOG_INFO(xml2dsrLogger, "writing DICOM SR output file: " << opt_ofname);
+            /* write SR document to dataset */
+            result = dsrdoc.write(*dataset);
+            /* generate new UIDs (if required) */
+            if (opt_generateUIDs)
+            {
+                char uid[100];
+                if (opt_overwriteUIDs || !dataset->tagExistsWithValue(DCM_StudyInstanceUID))
+                {
+                    OFLOG_INFO(xml2dsrLogger, "generating new Study Instance UID");
+                    dataset->putAndInsertString(DCM_StudyInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_STUDY_UID_ROOT));
+                }
+                if (opt_overwriteUIDs || !dataset->tagExistsWithValue(DCM_SeriesInstanceUID))
+                {
+                    OFLOG_INFO(xml2dsrLogger, "generating new Series Instance UID");
+                    dataset->putAndInsertString(DCM_SeriesInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_SERIES_UID_ROOT));
+                }
+                if (opt_overwriteUIDs || !dataset->tagExistsWithValue(DCM_SOPInstanceUID))
+                {
+                    OFLOG_INFO(xml2dsrLogger, "generating new SOP Instance UID");
+                    dataset->putAndInsertString(DCM_SOPInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_INSTANCE_UID_ROOT));
+                }
+            }
+            /* write DICOM file */
             if (result.good())
             {
-                DcmDataset *dataset = fileformat.getDataset();
-                OFLOG_INFO(xml2dsrLogger, "writing DICOM SR output file: " << opt_ofname);
-                /* write SR document to dataset */
-                result = dsrdoc->write(*dataset);
-                /* generate new UIDs (if required) */
-                if (opt_generateUIDs)
-                {
-                    char uid[100];
-                    if (opt_overwriteUIDs || !dataset->tagExistsWithValue(DCM_StudyInstanceUID))
-                    {
-                        OFLOG_INFO(xml2dsrLogger, "generating new Study Instance UID");
-                        dataset->putAndInsertString(DCM_StudyInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_STUDY_UID_ROOT));
-                    }
-                    if (opt_overwriteUIDs || !dataset->tagExistsWithValue(DCM_SeriesInstanceUID))
-                    {
-                        OFLOG_INFO(xml2dsrLogger, "generating new Series Instance UID");
-                        dataset->putAndInsertString(DCM_SeriesInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_SERIES_UID_ROOT));
-                    }
-                    if (opt_overwriteUIDs || !dataset->tagExistsWithValue(DCM_SOPInstanceUID))
-                    {
-                        OFLOG_INFO(xml2dsrLogger, "generating new SOP Instance UID");
-                        dataset->putAndInsertString(DCM_SOPInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_INSTANCE_UID_ROOT));
-                    }
-                }
-                /* write DICOM file */
-                if (result.good())
-                {
-                    result = fileformat.saveFile(opt_ofname, opt_xfer, opt_enctype, opt_glenc, opt_padenc,
-                        OFstatic_cast(Uint32, opt_filepad), OFstatic_cast(Uint32, opt_itempad), opt_writeMode);
-                }
-                if (result.bad())
-                    OFLOG_FATAL(xml2dsrLogger, result.text() << ": writing file: "  << opt_ofname);
-            } else
-                OFLOG_FATAL(xml2dsrLogger, result.text() << ": reading file: "  << opt_ifname);
-        }
-        delete dsrdoc;
+                result = fileformat.saveFile(opt_ofname, opt_xfer, opt_enctype, opt_glenc, opt_padenc,
+                    OFstatic_cast(Uint32, opt_filepad), OFstatic_cast(Uint32, opt_itempad), opt_writeMode);
+            }
+            if (result.bad())
+                OFLOG_FATAL(xml2dsrLogger, result.text() << ": writing file: " << opt_ofname);
+        } else
+            OFLOG_FATAL(xml2dsrLogger, result.text() << ": reading file: " << opt_ifname);
     }
 
     /* clean up XML library before quitting */

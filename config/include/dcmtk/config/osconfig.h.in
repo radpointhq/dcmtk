@@ -14,7 +14,7 @@
 #define END_EXTERN_C
 #endif
 
-/* MinGW needs some special handling because it is a mixture of WIN32 and Posix.
+/* MinGW needs some special handling because it is a mixture of WIN32 and POSIX.
  * The following settings are not tested by configure but need to be set for MinGW.
  */
 #ifdef __MINGW32__
@@ -43,10 +43,14 @@
 #define DCMTK_CHARSET_CONVERSION_ICU 1
 #define DCMTK_CHARSET_CONVERSION_ICONV 2
 #define DCMTK_CHARSET_CONVERSION_STDLIBC_ICONV 3
+#define DCMTK_CHARSET_CONVERSION_OFICONV 4
 
 /* LFS mode constants. */
 #define DCMTK_LFS 1
 #define DCMTK_LFS64 2
+
+/* Define to embed oficonv data files into oficonv library. */
+#undef DCMTK_ENABLE_BUILTIN_OFICONV_DATA
 
 /* Define to select character set conversion implementation. */
 #undef DCMTK_ENABLE_CHARSET_CONVERSION
@@ -113,6 +117,12 @@
 /* Define if __attribute__((aligned)) is available. */
 #undef HAVE_ATTRIBUTE_ALIGNED
 
+/* Define if the compiler supports __attribute__((deprecated)). */
+#undef HAVE_ATTRIBUTE_DEPRECATED
+
+/* Define if the compiler supports __attribute__((deprecated("message"))). */
+#undef HAVE_ATTRIBUTE_DEPRECATED_MSG
+
 /* Define to 1 if you have the `bcmp' function. */
 #undef HAVE_BCMP
 
@@ -171,6 +181,12 @@
 /* Define if the compiler supports basic C++11 syntax. */
 #undef HAVE_CXX11
 
+/* Define if the compiler supports [[deprecated]]. */
+#undef HAVE_CXX14_DEPRECATED_ATTRIBUTE
+
+/* Define if the compiler supports [[deprecated("message")]]. */
+#undef HAVE_CXX14_DEPRECATED_ATTRIBUTE_MSG
+
 /* Define if volatile is a known keyword. */
 #undef HAVE_CXX_VOLATILE
 
@@ -188,6 +204,12 @@
 /* Define if your system has a declaration for struct utimbuf in sys/types.h
    utime.h sys/utime.h . */
 #undef HAVE_DECLARATION_STRUCT_UTIMBUF
+
+/* Define if the compiler supports __declspec(deprecated). */
+#undef HAVE_DECLSPEC_DEPRECATED
+
+/* Define if the compiler supports __declspec(deprecated("message")). */
+#undef HAVE_DECLSPEC_DEPRECATED_MSG
 
 /* Define if the compiler supports default constructor detection via SFINAE.
    */
@@ -212,6 +234,9 @@
 /* Define to 1 if you have the <errno.h> header file. */
 #undef HAVE_ERRNO_H
 
+/* Define to 1 if you have the <err.h> header file. */
+#undef HAVE_ERR_H
+
 /* Define if your C++ compiler supports the explicit template specialization
    syntax. */
 #undef HAVE_EXPLICIT_TEMPLATE_SPECIALIZATION
@@ -224,6 +249,9 @@
 
 /* Define to 1 if you have the <fenv.h> header file. */
 #undef HAVE_FENV_H
+
+/* Define to 1 if you have the `fgetln' function. */
+#undef HAVE_FGETLN
 
 /* Define to 1 if you have the `finite' function. */
 #undef HAVE_FINITE
@@ -396,6 +424,9 @@
 /* Define to 1 if you have the `itoa' function. */
 #undef HAVE_ITOA
 
+/* Define to 1 if you have the <langinfo.h> header file. */
+#undef HAVE_LANGINFO_H
+
 /* Define to 1 if you have the <libc.h> header file. */
 #undef HAVE_LIBC_H
 
@@ -470,6 +501,9 @@
 
 /* Define to 1 if you have the `mktemp' function. */
 #undef HAVE_MKTEMP
+
+/* Define to 1 if you have the <mqueue.h> header file. */
+#undef HAVE_MQUEUE_H
 
 /* Define to 1 if you have the `nanosleep' function. */
 #undef HAVE_NANOSLEEP
@@ -601,6 +635,18 @@ typedef unsigned short ushort;
    <openssl/evp.h>. */
 #undef HAVE_OPENSSL_PROTOTYPE_EVP_PKEY_RSA_PSS
 
+/* Define if OpenSSL provides a prototype for NID_dsa_with_SHA512 in
+   <openssl/obj_mac.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_NID_DSA_WITH_SHA512
+
+/* Define if OpenSSL provides a prototype for NID_ecdsa_with_SHA3_256 in
+   <openssl/obj_mac.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_NID_ECDSA_WITH_SHA3_256
+
+/* Define if OpenSSL provides a prototype for NID_sha512_256WithRSAEncryption
+   in <openssl/obj_mac.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_NID_SHA512_256WITHRSAENCRYPTION
+
 /* Define if OpenSSL provides a prototype for OSSL_PROVIDER_load in
    <openssl/provider.h>. */
 #undef HAVE_OPENSSL_PROTOTYPE_OSSL_PROVIDER_LOAD
@@ -656,6 +702,26 @@ typedef unsigned short ushort;
    in <openssl/ssl.h>. */
 #undef HAVE_OPENSSL_PROTOTYPE_SSL_ERROR_WANT_CLIENT_HELLO_CB
 
+/* Define if OpenSSL provides a prototype for TLS1_3_RFC_AES_128_CCM_8_SHA256
+   in <openssl/ssl.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_TLS1_3_RFC_AES_128_CCM_8_SHA256
+
+/* Define if OpenSSL provides a prototype for TLS1_3_RFC_AES_256_GCM_SHA384 in
+   <openssl/ssl.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_TLS1_3_RFC_AES_256_GCM_SHA384
+
+/* Define if OpenSSL provides a prototype for
+   TLS1_3_RFC_CHACHA20_POLY1305_SHA256 in <openssl/ssl.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_TLS1_3_RFC_CHACHA20_POLY1305_SHA256
+
+/* Define if OpenSSL provides a prototype for
+   TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CCM_8 in <openssl/ssl.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_TLS1_TXT_ECDHE_ECDSA_WITH_AES_256_CCM_8
+
+/* Define if OpenSSL provides a prototype for
+   TLS1_TXT_ECDHE_ECDSA_WITH_CAMELLIA_256_GCM_SHA384 in <openssl/ssl.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_TLS1_TXT_ECDHE_ECDSA_WITH_CAMELLIA_256_GCM_SHA384
+
 /* Define if OpenSSL provides a prototype for
    TLS1_TXT_ECDHE_RSA_WITH_CHACHA20_POLY1305 in <openssl/ssl.h>. */
 #undef HAVE_OPENSSL_PROTOTYPE_TLS1_TXT_ECDHE_RSA_WITH_CHACHA20_POLY1305
@@ -703,6 +769,10 @@ typedef unsigned short ushort;
 /* Define if OpenSSL provides a prototype for X509_get_signature_nid in
    <openssl/x509.h>. */
 #undef HAVE_OPENSSL_PROTOTYPE_X509_GET_SIGNATURE_NID
+
+/* Define if OpenSSL provides a prototype for X509_STORE_CTX_get0_cert in
+   <openssl/x509_vfy.h>. */
+#undef HAVE_OPENSSL_PROTOTYPE_X509_STORE_CTX_GET0_CERT
 
 /* Define if OpenSSL provides a prototype for X509_STORE_get0_param in
    <openssl/x509.h>. */
@@ -841,6 +911,9 @@ typedef unsigned short ushort;
 
 /* Define if your system has a prototype for strcasecmp in string.h. */
 #undef HAVE_PROTOTYPE_STRCASECMP
+
+/* Define if your system has a prototype for strcasestr in string.h. */
+#undef HAVE_PROTOTYPE_STRCASESTR
 
 /* Define if your system has a prototype for strerror_r in string.h. */
 #undef HAVE_PROTOTYPE_STRERROR_R
@@ -1060,12 +1133,21 @@ typedef unsigned short ushort;
 /* Define if your system has a prototype for gettid. */
 #undef HAVE_SYS_GETTID
 
+/* Define to 1 if you have the <sys/mman.h> header file. */
+#undef HAVE_SYS_MMAN_H
+
+/* Define to 1 if you have the <sys/msg.h> header file. */
+#undef HAVE_SYS_MSG_H
+
 /* Define to 1 if you have the <sys/ndir.h> header file, and it defines `DIR'.
    */
 #undef HAVE_SYS_NDIR_H
 
 /* Define to 1 if you have the <sys/param.h> header file. */
 #undef HAVE_SYS_PARAM_H
+
+/* Define to 1 if you have the <sys/queue.h> header file. */
+#undef HAVE_SYS_QUEUE_H
 
 /* Define to 1 if you have the <sys/resource.h> header file. */
 #undef HAVE_SYS_RESOURCE_H
@@ -1093,6 +1175,9 @@ typedef unsigned short ushort;
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <sys/un.h> header file. */
+#undef HAVE_SYS_UN_H
 
 /* Define to 1 if you have the <sys/utime.h> header file. */
 #undef HAVE_SYS_UTIME_H
@@ -1343,7 +1428,7 @@ typedef unsigned short ushort;
 #undef socklen_t
 
 #if defined(HAVE_CXX11) && defined(__cplusplus) && __cplusplus < 201103L
-#error\
+#error \
 DCMTK was configured to use C++11 features, but your compiler does not or was not configured to provide them.
 #endif
 

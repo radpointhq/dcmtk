@@ -1,6 +1,6 @@
 /*
  *
- *  Copyright (C) 1993-2022, OFFIS e.V.
+ *  Copyright (C) 1993-2023, OFFIS e.V.
  *  All rights reserved.  See COPYRIGHT file for details.
  *
  *  This software and supporting documentation were developed by
@@ -859,7 +859,7 @@ public:
                     if (!findRequestConverter)
                         cond = findRequestConverter.selectCharacterSet(findRequestCharacterSet);
                     if (cond.good()) {
-                        // covert the string and cache the result, using the
+                        // convert the string and cache the result, using the
                         // specific delimitation characters for this VR
                         cond = findRequestConverter.convertString(
                             query->elem.PValueField,
@@ -964,7 +964,7 @@ OFBool DcmQueryRetrieveIndexDatabaseHandle::isConversionNecessary(const OFString
 
 /************
 **      Create the response list in specified handle,
-**      using informations found in an index record.
+**      using information found in an index record.
 **      Old response list is supposed freed
 **/
 
@@ -2761,7 +2761,7 @@ OFCondition DcmQueryRetrieveIndexDatabaseHandle::storeRequest (
                    (strcmp(SOPClassUID, UID_EnhancedXRayRadiationDoseSRStorage) == 0) ||
                    (strcmp(SOPClassUID, UID_SpectaclePrescriptionReportStorage) == 0) ||
                    (strcmp(SOPClassUID, UID_MacularGridThicknessAndVolumeReportStorage) == 0) ||
-                   (strcmp(SOPClassUID, UID_ImplantationPlanSRDocumentStorage) == 0) ||
+                   (strcmp(SOPClassUID, UID_ImplantationPlanSRStorage) == 0) ||
                    (strcmp(SOPClassUID, UID_RadiopharmaceuticalRadiationDoseSRStorage) == 0) ||
                    (strcmp(SOPClassUID, UID_AcquisitionContextSRStorage) == 0) ||
                    (strcmp(SOPClassUID, UID_SimplifiedAdultEchoSRStorage) == 0) ||
@@ -3257,7 +3257,12 @@ OFCondition DcmQueryRetrieveIndexDatabaseHandle::makeNewStoreFileName(
     if (m==NULL) m = "XX";
     sprintf(prefix, "%s_", m);
     // unsigned int seed = fnamecreator.hashString(SOPInstanceUID);
-    unsigned int seed = (unsigned int)time(NULL);
+
+    // Make seed static so that multiple/concurrent calls to this method
+    // will not use a seed that is initialized by the same time. Instead,
+    // rely on a seed that is updated by each call to makeFilename below, thus
+    // resulting in more "randomness" when called within the same second.
+    static unsigned int seed = (unsigned int)time(NULL);
     newImageFileName[0]=0; // return empty string in case of error
     if (! fnamecreator.makeFilename(seed, handle_->storageArea, prefix, ".dcm", filename))
         return QR_EC_IndexDatabaseError;
